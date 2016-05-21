@@ -33,7 +33,7 @@ web spider (crawler/scrapper) with:
 - 5x crawler (~40 treads per crawler)
 - 2x 1TB db (replication or extension?)
 
-### Database document format
+# Database document format
 ```
 {
 	_id
@@ -58,6 +58,6 @@ web spider (crawler/scrapper) with:
 }
 ```
 
-## Sources
+# Sources
 - http://www.michaelnielsen.org/ddi/how-to-crawl-a-quarter-billion-webpages-in-40-hours/
 
