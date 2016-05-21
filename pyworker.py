@@ -5,9 +5,9 @@ Implements multi-threaded job handler that solves a classic network problem:
     When processing a network job, often there will be data transferred but at such a slow
     rate that the connection is in fact "hung". In this case, the thread should be considered
     as "dead", and another thread should be started.
-    The "dead" thread is marked as so. If it eventually finished it's job, it will introspect
-    it's state and stop.
-    A new thread is created in it's place, so that there is always the same amount of "alive"
+    The "dead" thread is marked as so. If it eventually finishes its job, it will introspect
+    its state and stop.
+    A new thread is created in its place, so that there is always the same amount of "alive"
     threads working.
 Good programming practice is to kill network job after a certain amount of time without receiving
 any data.
