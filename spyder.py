@@ -22,6 +22,7 @@ def spyder_domain(domain):
         session = requests.session()
         session.verify = False  # don't check certificate
         session.stream = True
+        session.allow_redirects = True
         # todo update with pysocks
         # initialise SOCKS session with Tor
         # session_tor = requesocks.session()
@@ -86,10 +87,9 @@ def main():
     # create queue with last x domains from alexa top million
     tasks = Queue.Queue()
     with open('alexa_top_million.txt', 'r') as f:
-        last_x = [domain.strip() for domain in f.readlines()[-500:-1]]
+        last_x = [domain.strip() for domain in f.readlines()[-10000:-1]]
     for domain in last_x:
         tasks.put(domain)
-
 
     # create and start timed controller
     timed_thread_controller = pyworker.TimedThreadController(max_job_time=10,
