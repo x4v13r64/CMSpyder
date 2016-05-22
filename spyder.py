@@ -6,6 +6,7 @@ import requests
 # import requesocks
 import Queue
 import pyworker
+import time
 
 __author__ = "j4v"
 __copyright__ = "Copyright 2016, www"
@@ -82,23 +83,23 @@ def spyder_domain(domain):
 
 def main():
 
-    # create queue with last 100 domains from alexa top million
+    # create queue with last x domains from alexa top million
     tasks = Queue.Queue()
     with open('alexa_top_million.txt', 'r') as f:
-        last_100 = [domain.strip() for domain in f.readlines()[-100:-1]]
-    for domain in last_100:
+        last_x = [domain.strip() for domain in f.readlines()[-500:-1]]
+    for domain in last_x:
         tasks.put(domain)
 
-    for i in range(20):
-        spyder_domain(last_100[i])
 
-    # todo call pyworker
-    # # create and start timed controller
-    # timed_thread_controller = TimedThreadController(max_job_time=3,
-    #                                                 worker_count=1,
-    #                                                 tasks=tasks,
-    #                                                 job=print_input)
-    # timed_thread_controller.run()
+    # create and start timed controller
+    timed_thread_controller = pyworker.TimedThreadController(max_job_time=10,
+                                                             worker_count=75,
+                                                             tasks=tasks,
+                                                             job=spyder_domain)
+    start = time.time()
+    timed_thread_controller.run()
+    stop = time.time()
+    print stop - start
 
 
 if __name__ == "__main__":
