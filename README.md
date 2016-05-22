@@ -2,19 +2,22 @@
 web spider (crawler/scrapper) with:
 - CMS detection plugins (wordpress, joomla, drupal, magento), including version
 - passive plugin/theme/[other] detection, including version
-- mongodb to store documents (1 document per domain (or IP?))
+- mongodb document store (1 document per domain (or IP?))
     - keep historic versions (not updates)
 - subdomain bruteforcer (blog, worpress, wp) - passive
 - subdirectory bruteforcer (/blog, /wp) - active, light
 
 # TODO
+- design architecture
 - CMS detection plugins
 	- version detection
-	- plugin detection + plugin version detection
-- web spider
+	- plugin/other detection + version detection
+- web spider 'DONE - spyder'
 - multithreaded handler `DONE - pyworker`
 - distributed spider architecture (Fabric)
-- database configuration (mongodb)
+- document store (mongodb)
+- add a lot of logging
+- make thread count benchmarks to optimize number of threads per spyder
 
 # Possibilities
 - use WPScan code for WP detection
@@ -23,17 +26,18 @@ web spider (crawler/scrapper) with:
 
 # Considerations
 - not crawl same ip subnet often (e.g. 5 min wait per /24)
-- dont GET whole page (use "Range" header)
+- crawl pages behind CDNs/cloudflare (with cloudflare-scrape and such)
 
 # Projected
 - use WPScan API to check for vulnerable versions/plugins for WP
 - create website to visualise statistics
 
 # Hardware (time4vps)
-- 5x crawler (~40 treads per crawler)
-- 2x 1TB db (replication or extension?)
+- 10x crawler (~75 treads per crawler == ~2 million URLs / day)
+    - 20 million URLs / day -> 150 million URLs / week
+- 2x 2TB db (master-slave replication)
 
-# Database document format
+# document store format
 ```
 {
 	_id
