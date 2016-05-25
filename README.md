@@ -44,7 +44,7 @@ web spider (crawler/scrapper) with:
 - use WPScan API to check for vulnerable versions/plugins for WP
 
 # Hardware (VPS)
-- 1 controller
+- 1x controller
 - 10x spiders
 - 2x 2TB db (master-slave replication)
 
