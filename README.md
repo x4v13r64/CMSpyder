@@ -12,7 +12,7 @@ web spider (crawler/scrapper) with:
 - celery + eventlet to run tasks in parallel (event-driven)
 - reddis broker for spidering jobs
 - mongodb document store for spider results
-- Fabric for machine managing
+- Fabric for machine management
 - custom detection plugins
 - TBD website to view statistics
 
