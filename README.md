@@ -6,15 +6,17 @@ web spider (crawler/scrapper) with:
     - keep historic versions (not updates)
 - subdomain bruteforcer (common subdomains e.g. blog., store.) - passive
 - subdirectory bruteforcer (common directories e.g. /blog, /wp) - active, light
-- website to view statistics (TBD)
+- web interface to control spiders
+- website to view statistics
 
 # Technologies
 - celery + eventlet to run tasks in parallel (event-driven)
 - reddis broker for spidering jobs
 - mongodb document store for spider results
-- Fabric for machine management
+- Fabric for machine management (check out Puppet & Chef)
 - custom detection plugins
-- TBD website to view statistics
+- django interface to control spiders
+- website to view statistics (TBD)
 
 # Todo
 - design architecture
@@ -32,6 +34,7 @@ web spider (crawler/scrapper) with:
 - website to visualize statistics
 
 # Possibilities
+- truncate/limit number of bytes downloaded (200kb chunks)
 - add extraction of domains from spidered pages
 - version detection with fingerprints
 - scan-proof workers (tar-pit)
@@ -47,6 +50,7 @@ web spider (crawler/scrapper) with:
 - 1x controller
 - 10x spiders
 - 2x 2TB db (master-slave replication)
+    - could also use shards on every worker
 
 # document store format
 ```
