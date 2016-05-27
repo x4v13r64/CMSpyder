@@ -66,3 +66,5 @@ target/
 
 # virtual env
 venv
+
+db.sqlite3
