@@ -9,6 +9,15 @@ web spider (crawler/scrapper) with:
 - web interface to control spiders
 - website to view statistics
 
+# Milestones
+1. Implement a working prototype spyder (with trivial WordPress detection) using django and celery (sqlite backend, standard django ORM)
+2. Move backend to mongodb document store
+3. Move task queue to reddis key store
+4. Use Fabric for deployment over multiple machines
+5. Build Jenkins-based github-hosted website with daily statistics
+6. Refactor architecture for plugin-based detection (separate crawling from detection)
+7. TBD
+
 # Technologies
 - celery + eventlet to run tasks in parallel (event-driven)
 - reddis broker for spidering jobs
@@ -16,7 +25,7 @@ web spider (crawler/scrapper) with:
 - Fabric for machine management (check out Puppet & Chef)
 - custom detection plugins
 - django interface to control spiders
-- website to view statistics (TBD)
+- Jenkins-based website hosted on github with daily statistics for the spyder (Jenkins build by nightly cron job)
 
 # Todo
 - design architecture
