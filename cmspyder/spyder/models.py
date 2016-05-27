@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 
 class Domain(models.Model):
-    domain = models.CharField()
+    domain = models.CharField(max_length=250)
     BLOG_TYPES = (
         ('none', 'Unknonw'),
         ('wordpress', 'WordPress'),
