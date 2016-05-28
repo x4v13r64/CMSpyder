@@ -15,8 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -26,7 +24,6 @@ SECRET_KEY = '@-94qf(l2pj7yn7c@$%77vp=jkon#p^@%+_eac&x&o@835(v*q'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,6 +37,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'debug_toolbar',  # todo: not in prod
     'djcelery',
 ]
 
@@ -58,6 +56,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  # todo: not in prod
 ]
 
 ROOT_URLCONF = 'cmspyder.urls'
@@ -131,3 +130,32 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRAWLER_LOGS_DIR = '/tmp/cmspyder'
+
+# todo: not in prod
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TEMPLATE_CONTEXT': True,
+}
+
+
+# # CELERY
+# import djcelery
+# djcelery.setup_loader()
+# BROKER_URL = 'amqp://localhost'
+# CELERY_IMPORTS = ['spyder.tasks']
+# CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TASK_SERIALIZER = 'json'
+# from kombu import Queue, Exchange
+# crawler_exchange = Exchange('spyder', type='direct')
+# CELERY_QUEUES = (
+#     Queue('general', crawler_exchange, routing_key='spyder.general'),
+# )
+# CELERY_ROUTES = {
+#     'spyder.tasks.discover_type':
+#         {'queue': 'general', 'routing_key': 'spyder.general'},
+# }
+
+CRAWLER_LOG_FILE_NAME = '{0}'
+CRAWLER_LOG_FORMAT = '%(asctime)s %(message)s'
+CRAWLER_LOGS_DIR = '/tmp/crawler_logs'
