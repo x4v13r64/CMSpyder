@@ -5,6 +5,7 @@ from models import Domain
 
 from celery import shared_task
 import urllib
+import datetime
 
 
 @shared_task
@@ -19,6 +20,7 @@ def discover_type(domain_id):
 
     logger.info('type for http://{0}/ is {1}'.format(domain.domain, domain.type))
 
+    domain.last_crawl = datetime.datetime.now()
     domain.save()
 
 
