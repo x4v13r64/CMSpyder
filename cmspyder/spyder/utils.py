@@ -40,7 +40,7 @@ def get_domain_type(url):
     if is_wordpress(soup):
         return 'wordpress'
     else:
-        return None
+        return 'none'
 
 
 def create_logger(domain):
