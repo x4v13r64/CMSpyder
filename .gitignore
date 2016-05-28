@@ -67,4 +67,5 @@ target/
 # virtual env
 venv
 
-db.sqlite3
+cmspyder/db.sqlite3
+cmspyder/celerybeat-schedule
