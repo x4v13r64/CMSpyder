@@ -6,6 +6,7 @@ from tasks import discover_type
 
 class DomainAdmin(admin.ModelAdmin):
     list_display = ['domain', 'type', 'last_crawl']
+    list_filter = ['type']
     ordering = ['domain']
     actions = ['discover_type']
 
