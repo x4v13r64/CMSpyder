@@ -154,6 +154,9 @@ DEBUG_TOOLBAR_CONFIG = {
 #         {'queue': 'general', 'routing_key': 'spyder.general'},
 # }
 
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend',
+CELERY_RESULT_BACKEND = 'djcelery.backends.cache:CacheBackend',
+
 CRAWLER_LOG_FILE_NAME = '{0}'
 CRAWLER_LOG_FORMAT = '%(asctime)s %(message)s'
 CRAWLER_LOGS_DIR = '/tmp/crawler_logs'
