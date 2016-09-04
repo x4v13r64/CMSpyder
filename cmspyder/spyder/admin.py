@@ -8,6 +8,7 @@ class DomainAdmin(admin.ModelAdmin):
     list_display = ['domain', 'type', 'last_crawl']
     list_filter = ['type']
     actions = ['discover_type']
+    ordering = ['domain']
 
     def discover_type(self, request, queryset):
         for domain in queryset:

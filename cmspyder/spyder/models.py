@@ -8,8 +8,8 @@ class Domain(models.Model):
         (None, 'Unknown'),
         ('wordpress', 'WordPress'),
     )
-    type = models.CharField(max_length=50, choices=BLOG_TYPES, default=None, null=True)
+    type = models.CharField(max_length=50, choices=BLOG_TYPES, default=None, null=True, blank=True)
     last_crawl = models.DateTimeField('Last crawl', blank=True, null=True)
 
-    class Meta:
-        ordering = 'domain'
+    # class Meta:
+    #     ordering = 'domain'
