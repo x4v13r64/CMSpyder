@@ -1,7 +1,12 @@
 PySocks==1.5.7
-requests==2.10.0
-celery==3.1.20
-django-celery==3.1.17
 pymongo==3.2.1
 django-debug-toolbar==1.4
+
+celery==3.1.20
+
+requests==2.10.0
 beautifulsoup4==4.4.1
+eventlet
+dnspython
+
+django-celery==3.1.17

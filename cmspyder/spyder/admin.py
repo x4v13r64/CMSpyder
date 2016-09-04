@@ -12,7 +12,7 @@ class DomainAdmin(admin.ModelAdmin):
 
     def discover_type(self, request, queryset):
         for domain in queryset:
-            result = discover_type.delay(domain.id)
+            discover_type.delay(domain.id)
         self.message_user(request, 'Task(s) created')
     discover_type.short_description = 'Discover the type of the blog(s)'
 
