@@ -1,9 +1,10 @@
-from django.conf import settings
-
 import os
 import logging
 import requests
+
 from bs4 import BeautifulSoup
+
+from django.conf import settings
 
 
 def is_wordpress(soup):
@@ -40,7 +41,7 @@ def get_domain_type(url):
     if is_wordpress(soup):
         return 'wordpress'
     else:
-        return 'none'
+        return None
 
 
 def create_logger(domain):
