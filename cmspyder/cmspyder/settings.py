@@ -129,8 +129,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CRAWLER_LOGS_DIR = '/tmp/cmspyder'
-
 # todo: not in prod
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,

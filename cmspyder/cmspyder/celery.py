@@ -4,16 +4,19 @@ import os
 
 from celery import Celery
 
-# set the default Django settings module for the 'celery' program.
+# set the default Django settings module for the 'celery' program
+# must always appear before the app instance is created
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cmspyder.settings')
 
 from django.conf import settings  # noqa
 
 app = Celery('spyder')
 
-# Using a string here means the worker will not have to
-# pickle the object when using Windows.
+# Add the Django settings module as a configuration source for Celery. This means that you don't
+# have to use multiple configuration files, and instead configure Celery directly from the Django
+# setting.
 app.config_from_object('django.conf:settings')
+# enable Celery to autodiscover these modules in tasks.py
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 
