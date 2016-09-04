@@ -1,11 +1,8 @@
 #  How to run
 
-Staring the RabbitMQ server
-`sudo rabbitmq-server`
-Starting the worker process
-`celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
-Starting django
-`python manage.py runserver`
+- Staring the RabbitMQ server `sudo rabbitmq-server`
+- Starting the worker process `celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
+- Starting django `python manage.py runserver`
 
 # Objective
 web spider (crawler/scrapper) with:
