@@ -10,7 +10,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cmspyder.settings')
 
 from django.conf import settings  # noqa
 
-app = Celery('spyder')
+app = Celery('cmspyder')
 
 # Add the Django settings module as a configuration source for Celery. This means that you don't
 # have to use multiple configuration files, and instead configure Celery directly from the Django

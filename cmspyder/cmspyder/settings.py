@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,7 +39,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'debug_toolbar',  # todo: not in prod
-    'djcelery',
+    'kombu.transport.django',
 ]
 
 LOCAL_APPS = [
@@ -135,27 +136,14 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,
 }
 
+# celery config
 
-# # CELERY
-# import djcelery
-# djcelery.setup_loader()
-# BROKER_URL = 'amqp://localhost'
-# CELERY_IMPORTS = ['spyder.tasks']
-# CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TASK_SERIALIZER = 'json'
-# from kombu import Queue, Exchange
-# crawler_exchange = Exchange('spyder', type='direct')
-# CELERY_QUEUES = (
-#     Queue('general', crawler_exchange, routing_key='spyder.general'),
-# )
-# CELERY_ROUTES = {
-#     'spyder.tasks.discover_type':
-#         {'queue': 'general', 'routing_key': 'spyder.general'},
-# }
-
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend',
-CELERY_RESULT_BACKEND = 'djcelery.backends.cache:CacheBackend',
+BROKER_URL = 'django://'
+CELERY_RESULT_BACKEND = 'amqp'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
 
 CRAWLER_LOG_FILE_NAME = '{0}'
 CRAWLER_LOG_FORMAT = '%(asctime)s %(message)s'
