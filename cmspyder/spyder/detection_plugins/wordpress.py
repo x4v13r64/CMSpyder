@@ -15,7 +15,7 @@ class WordPressPlugin(BasePlugin):
                                                     type="wordpress")
 
 
-    def _is_wordpress(soup):
+    def _is_wordpress(self, soup):
         meta_tags = soup.find_all('meta', {'name': 'generator'})
 
         for meta_tag in meta_tags:

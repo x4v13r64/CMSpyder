@@ -41,10 +41,10 @@ def detect_cms(subdomain_id):
     subdomain = Subdomain.objects.get(id=subdomain_id)
 
     if subdomain.subdomain:
-        r = requests.get("http://%s.%s.%" %
+        r = requests.get("http://%s.%s.%s" %
                          (subdomain.subdomain, subdomain.domain, subdomain.domain.tld))
     else:
-        r = requests.get("http://%s.%" %
+        r = requests.get("http://%s.%s" %
                          (subdomain.domain, subdomain.domain.tld))
 
     detection_plugins = get_detection_plugins()
