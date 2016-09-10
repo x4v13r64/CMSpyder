@@ -1,6 +1,7 @@
 PySocks==1.5.7
 pymongo==3.2.1
 django-debug-toolbar==1.4
+django-model-utils==2.5.2
 
 celery==3.1.20
 
@@ -8,3 +9,4 @@ requests==2.10.0
 beautifulsoup4==4.4.1
 eventlet
 dnspython
+isort
