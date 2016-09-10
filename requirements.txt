@@ -8,5 +8,3 @@ requests==2.10.0
 beautifulsoup4==4.4.1
 eventlet
 dnspython
-
-django-celery==3.1.17
