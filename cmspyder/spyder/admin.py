@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from models import TLD, Domain, Subdomain, ScanResult, PluginResult
-from tasks import discover_type
+from models import TLD, Domain, PluginResult, ScanResult, Subdomain
+from tasks import detect_cms
 
 
 class TLDAdmin(admin.ModelAdmin):
@@ -26,12 +26,10 @@ class SubdomainAdmin(admin.ModelAdmin):
     get_domain_tld.short_description = 'TLD'
     get_domain_tld.admin_order_field = 'domain__tld'
 
-#     actions = ['discover_type']
-#
-#     def discover_type(self, request, queryset):
-#         for domain in queryset:
-#             discover_type.delay(domain.id)
-#         self.message_user(request, 'Task(s) created')
-#     discover_type.short_description = 'Discover the type of the blog(s)'
-
+    actions = ['detect_cms']
+    def detect_cms(self, request, queryset):
+        for subdomain in queryset:
+            detect_cms.delay(subdomain.id)
+        self.message_user(request, 'Task(s) created')
+    detect_cms.short_description = 'Detect CMS'
 admin.site.register(Subdomain, SubdomainAdmin)
