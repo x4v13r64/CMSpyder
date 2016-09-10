@@ -1,5 +1,4 @@
 #  How to run
-
 - Staring the RabbitMQ server `sudo rabbitmq-server`
 - Starting the worker process `celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
 - Starting django `python manage.py runserver`
@@ -7,9 +6,8 @@
 # Objective
 web spider (crawler/scrapper) with:
 - CMS detection (WordPress, Joomla, Drupal, Magento) - including version detection
-- passive plugin/theme/[other] detection - including version detection
-- mongodb document store (1 document per domain)
     - keep historic versions (not updates)
+- passive plugin/theme/[other] detection - including version detection
 - subdomain bruteforcer (common subdomains e.g. blog., store.) - passive
 - subdirectory bruteforcer (common directories e.g. /blog, /wp) - active, light
 - web interface to control spiders
@@ -63,36 +61,14 @@ web spider (crawler/scrapper) with:
 
 # Hardware (VPS)
 - 1x controller
-- 10x spiders
-- 2x 2TB db (master-slave replication)
-    - could also use shards on every worker
+ - debian/python/django docker vm running web server
+- 6x workers
+ - debian/python/django docker vm running worker   
+- 1x 2TB db
+    postgresql
+    rabbitmq
 
-# document store format
-```
-{
-	_id
-	domain (unique)
-	ip
-	country
-	date_created
-	entries [
-		{
-			type
-			date_created
-			version
-			country
-			subdomain/subpath
-			ip
-			date_created
-			plugins [
-				{name, version},
-			]
-		},
-	]
-}
-```
-
-# Sources
+# References
 - http://www.michaelnielsen.org/ddi/how-to-crawl-a-quarter-billion-webpages-in-40-hours/
 - https://andrewwilkinson.wordpress.com/2011/09/27/beating-google-with-couchdb-celery-and-whoosh-part-1/
 - http://danielfrg.com/blog/2013/09/11/django-celery-readability-crawler/
