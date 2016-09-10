@@ -36,6 +36,6 @@ admin.site.register(Subdomain, SubdomainAdmin)
 
 
 class ScanResultAdmin(admin.ModelAdmin):
-    list_display = ['subdomain', 'type', 'version']
+    list_display = ['subdomain', 'created', 'type', 'version']
     list_filter = ['subdomain', 'type']
 admin.site.register(ScanResult, ScanResultAdmin)
