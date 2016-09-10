@@ -33,3 +33,9 @@ class SubdomainAdmin(admin.ModelAdmin):
         self.message_user(request, 'Task(s) created')
     detect_cms.short_description = 'Detect CMS'
 admin.site.register(Subdomain, SubdomainAdmin)
+
+
+class ScanResultAdmin(admin.ModelAdmin):
+    list_display = ['subdomain', 'type', 'version']
+    list_filter = ['subdomain', 'type']
+admin.site.register(ScanResult, ScanResultAdmin)
