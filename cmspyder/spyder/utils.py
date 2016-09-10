@@ -1,9 +1,8 @@
-import os
 import logging
+import os
+
 import requests
-
 from bs4 import BeautifulSoup
-
 from django.conf import settings
 
 

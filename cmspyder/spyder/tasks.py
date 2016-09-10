@@ -1,11 +1,11 @@
-from django.conf import settings
-
-from utils import get_domain_type, create_logger
-from models import Domain
+import datetime
+import urllib
 
 from celery import shared_task
-import urllib
-import datetime
+from django.conf import settings
+
+from models import Domain
+from utils import create_logger, get_domain_type
 
 
 @shared_task
