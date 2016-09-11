@@ -3,8 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from model_utils.models import TimeStampedModel
 
-
-from domains.models import Subdomain, Domain
+from domains.models import Domain, Subdomain
 
 
 # BLOG_TYPES = (
