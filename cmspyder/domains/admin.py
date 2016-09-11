@@ -18,7 +18,7 @@ admin.site.register(Domain, DomainAdmin)
 
 class SubdomainAdmin(admin.ModelAdmin):
     list_display = ['subdomain', 'domain', 'get_domain_tld']
-    list_filter = ['domain', 'domain__tld']
+    list_filter = ['domain__tld']
     search_fields = ['subdomain']
 
     def get_domain_tld(self, obj):
