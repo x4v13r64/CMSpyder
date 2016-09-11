@@ -1,7 +1,5 @@
-#  How to run
-- Start the RabbitMQ server `sudo rabbitmq-server`
-- Start the worker process `celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
-- Start django `python manage.py runserver`
+CMSpyser
+======
 
 # Objective
 Web spider (crawler/scrapper) with:
@@ -15,16 +13,18 @@ Web spider (crawler/scrapper) with:
 
 # Milestones
 1. ~~Simple prototype django application using celery (sqlite backend)~~
-2. Initial architecture for plugin-based detection (in progress)
+2. Initial architecture for plugin-based detection **in progress**
 3. Container (docker) architecture for spyder and backend
 4. Additional features and backend hardening
-5. tbd
-5. Jekyll github-hosted website with daily statistics
+5. Tests, documentation and CI
+6. tbd
+7. Jekyll github-hosted website with daily statistics
 
 # Technologies
 - celery (with eventlet) to run tasks in parallel (event-driven)
 - RabbitMQ task queue
 - PostgresQL DB to store results
+- Nginx and Gunicorn for controller web
 - Docker for worker containers & Docker Machine for deployment
 - Django interface for results and monitoring of the backend
 - Jekyll for public-facing sites and results
@@ -37,5 +37,11 @@ Web spider (crawler/scrapper) with:
 
 # Considerations
 - not crawl same ip subnet often (e.g. 5 min wait per /24)
+- crawl 1-deep to find new subdomains
 - crawl pages behind CDNs/cloudflare (with cloudflare-scrape and such)
 - projected: use WPScan API to check for vulnerable versions/plugins for WP
+
+#  How to run
+- Start the RabbitMQ server `sudo rabbitmq-server`
+- Start the worker process `celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
+- Start django `python manage.py runserver`
