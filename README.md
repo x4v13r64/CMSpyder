@@ -31,6 +31,7 @@ Web spider (crawler/scrapper) with:
 - add extraction of domains from spidered pages
 - version detection with fingerprints
 - scan-proof workers (tar-pit)
+- Add header-based detection
 
 # Considerations
 - not crawl same ip subnet often (e.g. 5 min wait per /24)
