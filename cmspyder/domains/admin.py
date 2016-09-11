@@ -12,7 +12,7 @@ admin.site.register(TLD, TLDAdmin)
 class DomainAdmin(admin.ModelAdmin):
     list_display = ['domain', 'tld']
     list_filter = ['tld']
-    search_fields = ['domain', 'tld']
+    search_fields = ['domain']
 admin.site.register(Domain, DomainAdmin)
 
 
