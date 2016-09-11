@@ -1,6 +1,4 @@
-import requests
 from bs4 import BeautifulSoup
-from django.conf import settings
 
 from base import BasePlugin
 from spyder.models import ScanResult
@@ -9,14 +7,14 @@ from spyder.models import ScanResult
 class WordPressPlugin(BasePlugin):
 
     def __init__(self):
+        super(WordPressPlugin, self).__init__()
         self.paths = ['/']
 
-    def detect(self, subdomain, request):
-        soup = BeautifulSoup(request.text)
+    def detect(self, subdomain, requests_result):
+        soup = BeautifulSoup(requests_result['/'].text)
         if self._is_wordpress(soup):
             scan_result = ScanResult.objects.create(subdomain=subdomain,
                                                     type="wordpress")
-
 
     def _is_wordpress(self, soup):
         meta_tags = soup.find_all('meta', {'name': 'generator'})

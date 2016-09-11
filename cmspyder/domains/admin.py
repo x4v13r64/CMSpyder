@@ -30,6 +30,7 @@ class SubdomainAdmin(admin.ModelAdmin):
     def detect_cms(self, request, queryset):
         for subdomain in queryset:
             detect_cms.delay(subdomain.id)
+            # detect_cms(subdomain.id)
         self.message_user(request, 'Task(s) created')
     detect_cms.short_description = 'Detect CMS'
 admin.site.register(Subdomain, SubdomainAdmin)
