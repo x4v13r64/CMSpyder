@@ -1,4 +1,5 @@
-====== CMSpyder
+CMSpyser
+========
 
 # Objective
 Web spider (crawler/scrapper) with:
