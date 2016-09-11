@@ -54,8 +54,7 @@ def detect_cms(subdomain_id):
                                                         subdomain.domain,
                                                         subdomain.domain.tld,
                                                         path) if subdomain.subdomain else
-                                 "http://%s.%s%s" % (subdomain.subdomain,
-                                                     subdomain.domain,
+                                 "http://%s.%s%s" % (subdomain.domain,
                                                      subdomain.domain.tld,
                                                      path))
     for plugin in detection_plugins:
