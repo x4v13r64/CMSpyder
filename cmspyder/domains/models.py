@@ -34,10 +34,11 @@ class Subdomain(models.Model):
     subdomain = models.CharField(max_length=250, blank=True)
 
     def __unicode__(self):
+        # print self.domain
         if self.subdomain:
-            return u"{}.{}.{}".format(self.subdomain, self.domain.domain, self.domain.tld.tld)
+            return u"{}.{}".format(self.subdomain, self.domain)
         else:
-            return u"{}.{}".format(self.domain.domain, self.domain.tld.tld)
+            return self.domain.__unicode__()
 
     class Meta(object):
         verbose_name = 'Subdomain'
