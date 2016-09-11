@@ -6,11 +6,6 @@ from model_utils.models import TimeStampedModel
 from domains.models import Domain, Subdomain
 
 
-# BLOG_TYPES = (
-#     ('wordpress', 'WordPress'),
-# )
-
-
 class ScanResult(TimeStampedModel):
     subdomain = models.ForeignKey(Subdomain, related_name='scan')
     type = models.CharField(max_length=250)
