@@ -1,6 +1,3 @@
-CMSpyser
-========
-
 # Objective
 Web spider (crawler/scrapper) with:
 - CMS detection (WordPress, Joomla, Drupal, Magento) - including version detection
@@ -13,7 +10,7 @@ Web spider (crawler/scrapper) with:
 
 # Milestones
 1. ~~Simple prototype django application using celery (sqlite backend)~~
-2. Initial architecture for plugin-based detection **in progress**
+2. Initial architecture for plugin-based detection **[in progress]**
 3. Container (docker) architecture for spyder and backend
 4. Additional features and backend hardening
 5. Tests, documentation and CI
