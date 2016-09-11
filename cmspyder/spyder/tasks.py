@@ -6,6 +6,7 @@ from celery import shared_task
 
 from detection_plugins import get_detection_plugins
 from domains.models import Subdomain
+from models import ScanError
 from utils import create_logger
 
 
@@ -49,13 +50,19 @@ def detect_cms(subdomain_id):
     for plugin in detection_plugins:
         for path in plugin.paths:
             if path not in request_results:
-                request_results[path] = \
-                    requests.get("http://%s.%s.%s%s" % (subdomain.subdomain,
-                                                        subdomain.domain,
-                                                        subdomain.domain.tld,
-                                                        path) if subdomain.subdomain else
-                                 "http://%s.%s%s" % (subdomain.domain,
-                                                     subdomain.domain.tld,
-                                                     path))
+                try:
+                    request_results[path] = \
+                        requests.get("http://%s.%s.%s%s" % (subdomain.subdomain,
+                                                            subdomain.domain,
+                                                            subdomain.domain.tld,
+                                                            path) if subdomain.subdomain else
+                                     "http://%s.%s%s" % (subdomain.domain,
+                                                         subdomain.domain.tld,
+                                                         path))
+                except Exception, e:
+                    ScanError.objects.create(subdomain=subdomain,
+                                             error=u"{}\n{}".format(subdomain,
+                                                                    e))
+
     for plugin in detection_plugins:
         plugin.detect(subdomain, request_results)

@@ -12,7 +12,12 @@ class ScanResult(TimeStampedModel):
     version = models.CharField(max_length=50, blank=True)
 
 
-class PluginResult(models.Model):
+class PluginResult(TimeStampedModel):
     scan_result = models.ForeignKey(Domain, related_name='plugin_result')
     name = models.CharField(max_length=250)
     version = models.CharField(max_length=50)
+
+
+class ScanError(TimeStampedModel):
+    subdomain = models.ForeignKey(Subdomain, related_name='error')
+    error = models.TextField()
