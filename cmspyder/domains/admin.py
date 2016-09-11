@@ -5,21 +5,22 @@ from spyder.tasks import detect_cms
 
 
 class TLDAdmin(admin.ModelAdmin):
+    list_display = ['id', 'tld']
     search_fields = ['tld']
 admin.site.register(TLD, TLDAdmin)
 
 
 class DomainAdmin(admin.ModelAdmin):
-    list_display = ['domain', 'tld']
+    list_display = ['id', 'domain', 'tld']
     list_filter = ['tld']
     search_fields = ['domain']
 admin.site.register(Domain, DomainAdmin)
 
 
 class SubdomainAdmin(admin.ModelAdmin):
-    list_display = ['subdomain', 'domain', 'get_domain_tld']
+    list_display = ['id', 'subdomain', 'domain', 'get_domain_tld']
     list_filter = ['domain__tld']
-    search_fields = ['subdomain']
+    search_fields = ['subdomain', 'domain__domain']
 
     def get_domain_tld(self, obj):
         return obj.domain.tld

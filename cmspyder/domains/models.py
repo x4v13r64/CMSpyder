@@ -20,7 +20,7 @@ class Domain(models.Model):
     domain = models.CharField(max_length=250)
 
     def __unicode__(self):
-        return u"{}".format(self.domain)
+        return u"{}.{}".format(self.domain, self.tld)
 
     class Meta(object):
         verbose_name = 'Domain'
@@ -34,7 +34,10 @@ class Subdomain(models.Model):
     subdomain = models.CharField(max_length=250, blank=True)
 
     def __unicode__(self):
-        return u"{}".format(self.subdomain)
+        if self.subdomain:
+            return u"{}.{}.{}".format(self.subdomain, self.domain.domain, self.domain.tld.tld)
+        else:
+            return u"{}.{}".format(self.domain.domain, self.domain.tld.tld)
 
     class Meta(object):
         verbose_name = 'Subdomain'
