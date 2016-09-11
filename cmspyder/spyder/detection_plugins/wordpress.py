@@ -8,6 +8,9 @@ from spyder.models import ScanResult
 
 class WordPressPlugin(BasePlugin):
 
+    def __init__(self):
+        self.paths = ['/']
+
     def detect(self, subdomain, request):
         soup = BeautifulSoup(request.text)
         if self._is_wordpress(soup):
