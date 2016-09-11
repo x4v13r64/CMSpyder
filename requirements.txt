@@ -10,3 +10,4 @@ beautifulsoup4==4.4.1
 eventlet
 dnspython
 isort
+tldextract
