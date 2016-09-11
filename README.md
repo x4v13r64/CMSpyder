@@ -4,47 +4,30 @@
 - Start django `python manage.py runserver`
 
 # Objective
-web spider (crawler/scrapper) with:
+Web spider (crawler/scrapper) with:
 - CMS detection (WordPress, Joomla, Drupal, Magento) - including version detection
-    - keep historic versions (not updates)
-- passive plugin/theme/[other] detection - including version detection
-- subdomain bruteforcer (common subdomains e.g. blog., store.) - passive
-- subdirectory bruteforcer (common directories e.g. /blog, /wp) - active, light
-- web interface to control spiders
-- website to view statistics
+    - Keep historic versions (not updates)
+- Passive plugin/theme/[other] detection - including version detection
+- Subdomain light bruteforcer (common subdomains e.g. blog., store.) - active and passive detection
+- Subdirectory bruteforcer (common directories e.g. /blog, /wp) - active, light
+- Web interface for results and to monitor spiders (workers)
+- Static website to view results (updated with daily statistics)
 
 # Milestones
-1. Implement a working prototype spyder (with trivial WordPress detection) using django and celery (sqlite backend, standard django ORM)
-2. Move backend to mongodb document store
-3. Move task queue to reddis key store
-4. Use Fabric for deployment over multiple machines
-5. Build Jenkins-based github-hosted website with daily statistics
-6. Refactor architecture for plugin-based detection (separate crawling from detection)
-7. TBD
+1. ~~Simple prototype django application using celery (sqlite backend)~~
+2. Initial architecture for plugin-based detection (in progress)
+3. Container (docker) architecture for spyder and backend
+4. Additional features and backend hardening
+5. tbd
+5. Jekyll github-hosted website with daily statistics
 
 # Technologies
-- celery + eventlet to run tasks in parallel (event-driven)
-- reddis broker for spidering jobs
-- mongodb document store for spider results
-- Fabric for machine management (check out Puppet & Chef)
-- custom detection plugins
-- django interface to control spiders
-- Jenkins-based website hosted on github with daily statistics for the spyder (Jenkins build by nightly cron job)
-
-# Todo
-- design architecture
-    - the goal is to have a modular architecture where the spidering is separated from
-      the detection plugins
-- implement celery + eventlet spider with reddis broker
-- CMS detection plugins
-	- WordPress
-	- Joomla
-	- Magento
-	- Drupal
-- distributed worker handling with Fabric
-    - the goal is to have a complete interface to monitor and control workers and tasks
-- add a lot of logging (check out logbook + celery logging functionalities)
-- website to visualize statistics
+- celery (with eventlet) to run tasks in parallel (event-driven)
+- RabbitMQ task queue
+- PostgresQL DB to store results
+- Docker for worker containers & Docker Machine for deployment
+- Django interface for results and monitoring of the backend
+- Jekyll for public-facing sites and results
 
 # Possibilities
 - truncate/limit number of bytes downloaded (200kb chunks)
@@ -55,21 +38,4 @@ web spider (crawler/scrapper) with:
 # Considerations
 - not crawl same ip subnet often (e.g. 5 min wait per /24)
 - crawl pages behind CDNs/cloudflare (with cloudflare-scrape and such)
-
-# Projected
-- use WPScan API to check for vulnerable versions/plugins for WP
-
-# Hardware (VPS)
-- 1x controller
- - debian/python/django docker vm running web server
-- 6x workers
- - debian/python/django docker vm running worker   
-- 1x 2TB db
-    postgresql
-    rabbitmq
-
-# References
-- http://www.michaelnielsen.org/ddi/how-to-crawl-a-quarter-billion-webpages-in-40-hours/
-- https://andrewwilkinson.wordpress.com/2011/09/27/beating-google-with-couchdb-celery-and-whoosh-part-1/
-- http://danielfrg.com/blog/2013/09/11/django-celery-readability-crawler/
-
+- projected: use WPScan API to check for vulnerable versions/plugins for WP
