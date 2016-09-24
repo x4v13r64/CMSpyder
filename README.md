@@ -17,6 +17,10 @@ Web spider (crawler/scrapper) with:
 1. ~~Simple prototype django application using celery (sqlite backend)~~
 2. ~~Initial architecture for plugin-based detection~~ 
 3. Container (docker) architecture for spyder and backend **[in progress]**
+ - **storage docker image**
+     - configure rabbitmq management webplugin
+ - worker docker image
+ - master docker image
 4. Flower integration to monitor tasks
 5. Additional features and backend hardening
 6. Tests, documentation and CI
