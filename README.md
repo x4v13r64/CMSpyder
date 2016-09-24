@@ -17,8 +17,9 @@ Web spider (crawler/scrapper) with:
 1. ~~Simple prototype django application using celery (sqlite backend)~~
 2. ~~Initial architecture for plugin-based detection~~ 
 3. Container (docker) architecture for spyder and backend **[in progress]**
-4. Additional features and backend hardening
-5. Tests, documentation and CI
+4. Flower integration to monitor tasks
+5. Additional features and backend hardening
+6. Tests, documentation and CI
 7. Jekyll github-hosted website with daily statistics
 8. Additional plugins
 
@@ -34,6 +35,7 @@ Web spider (crawler/scrapper) with:
 
 # Technologies
 - celery (with eventlet) to run tasks in parallel (event-driven)
+ - flow to monitor celery tasks
 - RabbitMQ task queue
 - PostgresQL DB to store results
 - Nginx and Gunicorn for controller web
