@@ -1,0 +1,20 @@
+# https://hub.docker.com/r/_/postgres/
+postgresql:
+  image: postgres
+  environment:
+    - POSTGRES_DB=db_tmp
+    - POSTGRES_USER=db_tmp_user
+    - POSTGRES_PASSWORD=password
+  volumes:
+    - /tmp/tmp-db/postgresql:/var/lib/postgresql
+  ports:
+    - "5432:5432"
+
+# https://hub.docker.com/_/rabbitmq/
+rabbitmq:
+  image: rabbitmq
+  environment:
+    - RABBITMQ_DEFAULT_USER=user
+    - RABBITMQ_DEFAULT_PASSWORD=password
+  ports:
+    - "15672:15672"
