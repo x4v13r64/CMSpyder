@@ -9,23 +9,6 @@ from domains.models import Subdomain
 from models import ScanError
 from utils import create_logger
 
-
-# @shared_task
-# def discover_type(domain_id):
-#     domain = Domain.objects.get(id=domain_id)
-#
-#     # Create and start logger
-#     logger = create_logger(domain_id)
-#     logger.info('discover http://{0}'.format(domain.domain))
-#
-#     domain.type = get_domain_type('http://%s/' % domain.domain)
-#
-#     logger.info('type for http://{0}/ is {1}'.format(domain.domain, domain.type))
-#
-#     domain.last_crawl = datetime.datetime.now()
-#     domain.save()
-#
-#
 # @shared_task
 # def crawl(domain_id):
 #     domain = Domain.objects.get(id=domain_id)
@@ -39,18 +22,25 @@ from utils import create_logger
 
 @shared_task
 def detect_cms(subdomain_id):
+
     # retrieve subdomain object
     subdomain = Subdomain.objects.get(id=subdomain_id)
+
+    # Create and start logger
+    logger = create_logger(subdomain.id)
 
     # get all detection plugins
     detection_plugins = get_detection_plugins()
 
     # build dict of request results
     request_results = {}
+    # for each path defined in a plugin, if that path hasn't been queried yet, query that path
+    # and put the result in the result dict
     for plugin in detection_plugins:
         for path in plugin.paths:
             if path not in request_results:
                 try:
+                    logger.info('discover http://{0}'.format(subdomain))
                     request_results[path] = \
                         requests.get("http://%s.%s.%s%s" % (subdomain.subdomain,
                                                             subdomain.domain,
@@ -60,9 +50,9 @@ def detect_cms(subdomain_id):
                                                          subdomain.domain.tld,
                                                          path))
                 except Exception, e:
+                    # log scan error
                     ScanError.objects.create(subdomain=subdomain,
-                                             error=u"{}\n{}".format(subdomain,
-                                                                    e))
+                                             error=u"{}\n{}".format(subdomain, e))
 
     for plugin in detection_plugins:
         plugin.detect(subdomain, request_results)

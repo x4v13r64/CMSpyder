@@ -10,11 +10,11 @@ class WordPressPlugin(BasePlugin):
         super(WordPressPlugin, self).__init__()
         self.paths = ['/']
 
-    def detect(self, subdomain, requests_result):
-        soup = BeautifulSoup(requests_result['/'].text)
+    def detect(self, subdomain, requests_results):
+        soup = BeautifulSoup(requests_results['/'].text)
         if self._is_wordpress(soup):
-            scan_result = ScanResult.objects.create(subdomain=subdomain,
-                                                    type="wordpress")
+            ScanResult.objects.create(subdomain=subdomain,
+                                      type="wordpress")
 
     def _is_wordpress(self, soup):
         meta_tags = soup.find_all('meta', {'name': 'generator'})
