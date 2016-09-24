@@ -28,13 +28,12 @@ Web spider (crawler/scrapper) with:
 8. Additional plugins
 
 # Features (unordered)
-- truncate/limit number of bytes downloaded (200kb chunks)
 - version detection with fingerprints
 - scan-proof workers (tar-pit)
 - Add header-based detection
 - not crawl same ip subnet often (e.g. 5 min wait per /24)
 - crawl 1-deep to find new subdomains
-- crawl pages behind CDNs/cloudflare (with cloudflare-scrape and such)
+- crawl pages behind CDNs/cloudflare (with cloudflare-scrape, crimeflare and such)
 - projected: use WPScan API to check for vulnerable versions/plugins for WP
 
 # Technologies
