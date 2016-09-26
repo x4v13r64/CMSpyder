@@ -22,7 +22,10 @@ DATABASES = {
 }
 
 # celery config
-BROKER_URL = os.environ['BROKER_URL']
+BROKER_URL = 'amqp://%s:%s@%s:%s//' % (os.environ['RABBIT_MQ_USER'],
+                                       os.environ['RABBIT_MQ_PASSWORD'],
+                                       os.environ['RABBIT_MQ_HOST'],
+                                       os.environ['RABBIT_MQ_PORT'],)
 CELERY_RESULT_BACKEND = 'amqp'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
