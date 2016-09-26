@@ -7,7 +7,7 @@ DEBUG = False
 # TODO move to env
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Database
 DATABASES = {
