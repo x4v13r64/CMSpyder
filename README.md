@@ -10,7 +10,7 @@ Web spider (crawler/scrapper) with:
 
 #  Running the project
 - Start the RabbitMQ server `sudo rabbitmq-server`
-- Start the worker process `celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
+- Start the worker process `DJANGO_SETTINGS_MODULE='cmspyder.settings.dev' celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
 - Start django `python manage.py runserver --settings=cmspyder.settings.dev`
 
 # Milestones
