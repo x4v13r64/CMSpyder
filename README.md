@@ -1,4 +1,4 @@
-[![CircleCI](https://img.shields.io/circleci/project/BrightFlair/PHP.Gt.svg?maxAge=2592000)](https://circleci.com/gh/j4v/CMSpyder)
+[![CircleCI](https://circleci.com/gh/j4v/CMSpyder.svg?style=svg)](https://circleci.com/gh/j4v/CMSpyder)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/6f2f61d35ba345e7be82fad62c2d883c/badge.svg)](https://www.quantifiedcode.com/app/project/6f2f61d35ba345e7be82fad62c2d883c)
 
 # Objective
