@@ -1,4 +1,7 @@
 # Objective
+
+[![CircleCI](https://img.shields.io/circleci/project/BrightFlair/PHP.Gt.svg?maxAge=2592000)](https://circleci.com/gh/j4v/CMSpyder)
+
 Web spider (crawler/scrapper) with:
 - CMS detection (WordPress, Joomla, Drupal, Magento) - including version detection
     - Keep historic versions (not updates)
