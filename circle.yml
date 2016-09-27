@@ -1,0 +1,17 @@
+machine:
+    python:
+        version: 2.7.10
+
+general:
+    build_dir: cmspyder
+
+dependencies:
+    pre:
+        - easy_install -U setuptools
+        - pip install -r requirements.txt
+
+test:
+    override:
+        - python manage.py check --settings=cmspyder.settings.dev
+        - python manage.py test spyder.tests --settings=cmspyder.settings.dev
+
