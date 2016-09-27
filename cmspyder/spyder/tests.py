@@ -12,5 +12,5 @@ class DetectCMSTestCase(TestCase):
         google_subdomain = Subdomain(domain=google_domain)
 
     def test_detect_cms(self):
-        google_subdomain = Subdomain.objects.get(domain='google')
-        detect_cms(google_subdomain.id)
+        subdomains = Subdomain.objects.filter()
+        detect_cms(subdomains[0].id)
