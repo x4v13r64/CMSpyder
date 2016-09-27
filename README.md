@@ -15,9 +15,12 @@ Web crawler/scrapper with:
     - Updated with daily statistics
 
 #  Running
-- Start the RabbitMQ server `$ sudo rabbitmq-server`
-- Start the worker process `$ DJANGO_SETTINGS_MODULE='cmspyder.settings.dev' celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
-- Start django `$ python manage.py runserver --settings=cmspyder.settings.dev`
+- Start the RabbitMQ server
+`$ sudo rabbitmq-server`
+- Start the worker process
+`$ DJANGO_SETTINGS_MODULE='cmspyder.settings.dev' celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
+- Start django
+`$ python manage.py runserver --settings=cmspyder.settings.dev`
 
 # Milestones
 1. ~~Prototype django application using celery~~
