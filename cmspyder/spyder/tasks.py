@@ -42,7 +42,7 @@ def detect_cms(subdomain_id):
                 try:
                     logger.info('discover http://{0}'.format(subdomain))
                     request_results[path] = \
-                        requests.get(u"http://%s%s" % (subdomain.subdomain, path),
+                        requests.get(u"http://%s%s" % (subdomain, path),
                                      verify=False,
                                      timeout=10)
                 except requests.exceptions.HTTPError as e:
