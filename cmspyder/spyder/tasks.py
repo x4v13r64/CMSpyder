@@ -42,13 +42,14 @@ def detect_cms(subdomain_id):
                 try:
                     logger.info('discover http://{0}'.format(subdomain))
                     request_results[path] = \
-                        requests.get("http://%s.%s.%s%s" % (subdomain.subdomain,
-                                                            subdomain.domain,
-                                                            subdomain.domain.tld,
-                                                            path) if subdomain.subdomain else
-                                     "http://%s.%s%s" % (subdomain.domain,
-                                                         subdomain.domain.tld,
-                                                         path))
+                        requests.get(u"http://%s%s" % (subdomain.subdomain, path))
+                        # requests.get("http://%s.%s.%s%s" % (subdomain.subdomain,
+                        #                                     subdomain.domain,
+                        #                                     subdomain.domain.tld,
+                        #                                     path) if subdomain.subdomain else
+                        #              "http://%s.%s%s" % (subdomain.domain,
+                        #                                  subdomain.domain.tld,
+                        #                                  path))
                 except Exception, e:
                     # log scan error
                     ScanError.objects.create(subdomain=subdomain,
