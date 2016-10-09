@@ -42,18 +42,27 @@ def detect_cms(subdomain_id):
                 try:
                     logger.info('discover http://{0}'.format(subdomain))
                     request_results[path] = \
-                        requests.get(u"http://%s%s" % (subdomain.subdomain, path))
-                        # requests.get("http://%s.%s.%s%s" % (subdomain.subdomain,
-                        #                                     subdomain.domain,
-                        #                                     subdomain.domain.tld,
-                        #                                     path) if subdomain.subdomain else
-                        #              "http://%s.%s%s" % (subdomain.domain,
-                        #                                  subdomain.domain.tld,
-                        #                                  path))
-                except Exception, e:
-                    # log scan error
-                    ScanError.objects.create(subdomain=subdomain,
+                        requests.get(u"http://%s%s" % (subdomain.subdomain, path),
+                                     verify=False,
+                                     timeout=10)
+                except requests.exceptions.HTTPError as e:
+                    ScanError.objects.create(type='HTTP error',
+                                             subdomain=subdomain,
                                              error=u"{}\n{}".format(subdomain, e))
-
+                except requests.exceptions.Timeout:
+                    ScanError.objects.create(type='timeout',
+                                             subdomain=subdomain)
+                except requests.exceptions.TooManyRedirects:
+                    ScanError.objects.create(type='redirect limit',
+                                             subdomain=subdomain)
+                # Tell the user their URL was bad and try a different one
+                except requests.exceptions.RequestException as e:
+                    ScanError.objects.create(type='request',
+                                             subdomain=subdomain,
+                                             error=u"{}".format(e))
+                except Exception, e:
+                    ScanError.objects.create(type='general',
+                                             subdomain=subdomain,
+                                             error=u"{}".format(e))
     for plugin in detection_plugins:
         plugin.detect(subdomain, request_results)

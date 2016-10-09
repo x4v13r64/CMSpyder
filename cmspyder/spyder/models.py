@@ -20,4 +20,5 @@ class PluginResult(TimeStampedModel):
 
 class ScanError(TimeStampedModel):
     subdomain = models.ForeignKey(Subdomain, related_name='error')
+    type = models.CharField(max_length=250)
     error = models.TextField()

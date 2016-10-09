@@ -12,7 +12,8 @@ admin.site.register(ScanResult, ScanResultAdmin)
 
 
 class ScanErrorAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created', 'subdomain']
+    list_display = ['id', 'created', 'subdomain', 'type']
+    list_filter = ['type']
     search_fields = ['subdomain__subdomain', 'subdomain__domain__domain']
     readonly_fields = ['subdomain', 'error']
 admin.site.register(ScanError, ScanErrorAdmin)
