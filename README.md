@@ -16,17 +16,18 @@ Web crawler/scrapper with:
 
 #  Running
 - Start the RabbitMQ server
-`$ sudo rabbitmq-server`
+`$ rabbitmq-server`
 - Start the worker process
-`$ DJANGO_SETTINGS_MODULE='cmspyder.settings.dev' celery -A cmspyder worker -l info --concurrency=500 --pool=eventlet`
+`$ DJANGO_SETTINGS_MODULE='cmspyder.settings.dev' celery -A cmspyder worker -l info --concurrency=10 --pool=eventlet`
 - Start django
-`$ python manage.py runserver --settings=cmspyder.settings.dev`
+`$ python manage.py runserver 0.0.0.0:80 --settings=cmspyder.settings.dev --insecure`
+
 
 # Milestones
 1. ~~Prototype django application using celery~~
 2. ~~Initial architecture for plugin-based detection~~
     1. ~~WordPress basic plugin~~
-3. Initial bakend configuration **[in progress]**
+3. ~~Initial bakend configuration~~
 4. ~~CircleCI integration~~
 5. ~~QuantifiedCode integration~~
 6. Second iteration **[in progress]**
@@ -50,7 +51,7 @@ Web crawler/scrapper with:
     4. Test cases
 10. Jekyll github-hosted website with daily statistics
 11. TBD
-12. Container (docker) architecture (currently not supported by hosting)
+12. Container (docker) architecture (currently not supported by VPS hosting)
 
 # Technologies
 - celery (with eventlet) to run tasks in parallel
