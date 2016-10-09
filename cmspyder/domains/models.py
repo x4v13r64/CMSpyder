@@ -34,8 +34,6 @@ class Subdomain(models.Model):
     subdomain = models.CharField(max_length=250, blank=True)
 
     def __unicode__(self):
-        # return u"{}".format(self.subdomain)
-        # TODO why does this make ScanError admin lag
         if self.subdomain:
             return u"{}.{}".format(self.subdomain, self.domain)
         else:
