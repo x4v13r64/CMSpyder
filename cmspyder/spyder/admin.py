@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models import PluginResult, ScanResult, ScanError
+from models import PluginResult, ScanError, ScanResult
 
 
 class ScanResultAdmin(admin.ModelAdmin):

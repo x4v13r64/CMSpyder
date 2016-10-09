@@ -2,6 +2,7 @@ import datetime
 import urllib
 
 import requests
+from bs4 import BeautifulSoup
 from celery import shared_task
 
 from detection_plugins import get_detection_plugins
@@ -9,15 +10,21 @@ from domains.models import Subdomain
 from models import ScanError
 from utils import create_logger
 
+
 # @shared_task
-# def crawl(domain_id):
-#     domain = Domain.objects.get(id=domain_id)
+# def discover_domains(subdomain, request_results):
 #
 #     # Create and start logger
-#     logger = create_logger(urllib.quote(domain.domain).replace('/', '_'))
-#     logger.info('crawl start {0}'.format(domain.url))
+#     logger = create_logger(urllib.quote(subdomain.id)
 #
-#     # todo crawl
+#     logger.info('domain_discover start {0}'.format(subdomain))
+#
+#     for request_result in request_results:
+#
+#
+#
+#
+#     return 1
 
 
 @shared_task
@@ -64,5 +71,10 @@ def detect_cms(subdomain_id):
                     ScanError.objects.create(type='general',
                                              subdomain=subdomain,
                                              error=u"{}".format(e))
+
+    # discover new domains
+    discover_domains.delay(subdomain, request_results)
+
+    # fingerprint CMSs
     for plugin in detection_plugins:
         plugin.detect(subdomain, request_results)

@@ -1,7 +1,7 @@
-from spyder.tasks import detect_cms
-from domains.models import *
-
 from django.test import TestCase
+
+from domains.models import *
+from spyder.tasks import detect_cms
 
 
 class DetectCMSTestCase(TestCase):
