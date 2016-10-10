@@ -1,5 +1,7 @@
 [![CircleCI](https://circleci.com/gh/j4v/CMSpyder/tree/master.svg?style=shield)](https://circleci.com/gh/j4v/CMSpyder/tree/master)
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/6f2f61d35ba345e7be82fad62c2d883c/badge.svg)](https://www.quantifiedcode.com/app/project/6f2f61d35ba345e7be82fad62c2d883c)
+[![Code Health](https://landscape.io/github/j4v/CMSpyder/master/landscape.svg?style=flat)](https://landscape.io/github/j4v/CMSpyder/master)
+[![codecov](https://codecov.io/gh/j4v/CMSpyder/branch/master/graph/badge.svg)](https://codecov.io/gh/j4v/CMSpyder)
 
 # Project
 Web crawler/scrapper with:
