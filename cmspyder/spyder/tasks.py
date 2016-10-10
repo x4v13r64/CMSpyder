@@ -33,6 +33,8 @@ def detect_cms(subdomain_id):
     # Create and start logger
     logger = create_logger('detect_{0}.log'.format(subdomain.id))
 
+    logger.info('detect {0} init'.format(subdomain))
+
     # get all detection plugins
     detection_plugins = get_detection_plugins()
 
@@ -44,35 +46,43 @@ def detect_cms(subdomain_id):
         for path in plugin.paths:
             if path not in request_results:
                 try:
-                    logger.info('discover http://{0}'.format(subdomain))
+                    logger.info('request {0} START'.format(subdomain))
                     request_results[path] = \
                         requests.get(u"http://%s%s" % (subdomain, path),
                                      verify=False,
                                      timeout=10)
+                    logger.info('request {0} DONE'.format(subdomain))
                 except requests.exceptions.HTTPError as e:
                     ScanError.objects.create(type='HTTP error',
                                              subdomain=subdomain,
                                              error=u"{}\n{}".format(subdomain, e))
+                    logger.info('request {0} ERROR HTTPError'.format(subdomain))
                 except requests.exceptions.Timeout:
                     ScanError.objects.create(type='timeout',
                                              subdomain=subdomain)
+                    logger.info('request {0} ERROR timeout'.format(subdomain))
                 except requests.exceptions.TooManyRedirects:
                     ScanError.objects.create(type='redirect limit',
                                              subdomain=subdomain)
+                    logger.info('request {0} ERROR redirect limit'.format(subdomain))
                 # Tell the user their URL was bad and try a different one
                 except requests.exceptions.RequestException as e:
                     ScanError.objects.create(type='request',
                                              subdomain=subdomain,
                                              error=u"{}".format(e))
+                    logger.info('request {0} ERROR request {1}'.format(subdomain, e))
                 except Exception as e:
                     ScanError.objects.create(type='general',
                                              subdomain=subdomain,
                                              error=u"{}".format(e))
+                    logger.info('request {0} ERROR general {1}'.format(subdomain, e))
 
     # discover new domains
+    logger.info('request {0} discover subtask'.format(subdomain))
     for path in request_results:
         discover_domains.delay(subdomain.id, request_results[path].text)
 
     # fingerprint CMSs
+    logger.info('detect {0} START'.format(subdomain))
     for plugin in detection_plugins:
         plugin.detect(subdomain, request_results)
