@@ -79,10 +79,10 @@ def detect_cms(subdomain_id):
                                              error=u"{}".format(e))
                     logger.info('detect request {0} ERROR general {1}'.format(subdomain, e))
 
-    # # discover new domains
-    # logger.info('request {0} discover subtask'.format(subdomain))
-    # for path in request_results:
-    #     discover_domains.delay(subdomain.id, request_results[path].text)
+    # discover new domains
+    logger.info('request {0} discover subtask'.format(subdomain))
+    for path in request_results:
+        discover_domains.delay(subdomain.id, request_results[path].text)
 
     # fingerprint CMSs
     logger.info('detect {0} START'.format(subdomain))
