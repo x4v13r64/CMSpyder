@@ -15,4 +15,4 @@ test:
         - python manage.py check --settings=cmspyder.settings.dev
         - python manage.py test spyder.tests --settings=cmspyder.settings.dev
     post:
-        - cd cmspyder ; bash <(curl -s https://codecov.io/bash)
+        - bash <(curl -s https://codecov.io/bash) -p $BUILD_DIR/
