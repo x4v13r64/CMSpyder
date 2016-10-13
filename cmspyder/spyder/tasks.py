@@ -21,6 +21,7 @@ def discover_domains(subdomain_id, request_result_text):
         if link.has_attr('href'):
             if '://' in link['href']:  # todo improve this
                 logger.info('found {0}'.format(link['href']))
+                # todo make it so this is not called multiple times for the same domain
                 import_subdomain(link['href'])
 
     logger.info('discover {0} DONE'.format(subdomain_id))
@@ -39,6 +40,10 @@ def detect_cms(subdomain_id):
 
     # get all detection plugins
     detection_plugins = get_detection_plugins()
+
+    # todo start by resolving IP
+
+    # todo should it iterate on all files after any type of error (e.g. timeout)?
 
     # build dict of request results
     request_results = {}
