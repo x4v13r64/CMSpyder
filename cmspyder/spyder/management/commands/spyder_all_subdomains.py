@@ -24,9 +24,7 @@ class Command(BaseCommand):
         chan = conn.channel()
         name, jobs, consumers = chan.queue_declare(queue=settings.CELERY_DEFAULT_QUEUE,
                                                    passive=True)
-        print name
         print jobs
-        print consumers
 
         return
 
