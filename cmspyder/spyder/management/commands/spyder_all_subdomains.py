@@ -14,6 +14,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        print "Checking job count"
+
         # get the number of jobs currently running
         conn = amqp.Connection(host='%s:%s' % (os.environ['RABBIT_MQ_HOST'],
                                                os.environ['RABBIT_MQ_PORT'],),
@@ -28,11 +30,11 @@ class Command(BaseCommand):
 
         # if under 10k jobs, send 100k jobs
         if jobs < 1000:
-            print "Add new jobs"
+            print "%s jobs: Will add 100k jobs" % jobs
             subdomains = Subdomain.objects.filter()
             for subdomain in subdomains[:100000]:
                 detect_cms.delay(subdomain.id)
             return 1
         else:
-            print "Already enough jobs"
+            print "%s jobs: skip" % jobs
             return 0
