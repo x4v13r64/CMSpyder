@@ -11,6 +11,7 @@ from utils import create_logger
 
 @shared_task
 def discover_domains(subdomain_id, request_result_text):
+    # todo set max time for these tasks
 
     # Create and start logger
     logger = create_logger('discover_{0}.log'.format(subdomain_id))

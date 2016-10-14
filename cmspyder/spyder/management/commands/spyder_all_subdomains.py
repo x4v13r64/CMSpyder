@@ -28,9 +28,11 @@ class Command(BaseCommand):
 
         # if under 10k jobs, send 100k jobs
         if jobs < 1000:
+            print "Add new jobs"
             subdomains = Subdomain.objects.filter()
             for subdomain in subdomains[:100000]:
                 detect_cms.delay(subdomain.id)
             return 1
         else:
+            print "Already enough jobs"
             return 0
