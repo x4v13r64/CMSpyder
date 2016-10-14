@@ -36,5 +36,5 @@ class Command(BaseCommand):
                 detect_cms.delay(subdomain.id)
             return 1
         else:
-            print "%s jobs: skip" % jobs
+            print "%s jobs: skipping" % jobs
             return 0
