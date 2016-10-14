@@ -26,7 +26,17 @@ BROKER_URL = 'amqp://%s:%s@%s:%s//' % (os.environ['RABBIT_MQ_USER'],
                                        os.environ['RABBIT_MQ_PASSWORD'],
                                        os.environ['RABBIT_MQ_HOST'],
                                        os.environ['RABBIT_MQ_PORT'],)
-CELERY_RESULT_BACKEND = 'amqp'
+
+CELERY_DEFAULT_QUEUE = 'cmspyderqueue'
+CELERY_QUEUES = {
+    CELERY_DEFAULT_QUEUE: {
+        'exchange': CELERY_DEFAULT_QUEUE,
+        'binding_key': CELERY_DEFAULT_QUEUE,
+    }
+}
+CELERY_IGNORE_RESULT = True
+# CELERY_RESULT_BACKEND = 'amqp'
+
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
