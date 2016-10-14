@@ -14,14 +14,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        conn = amqp.Connection(host='amqp://%s:%s@%s:%s//' % (os.environ['RABBIT_MQ_USER'],
-                                                              os.environ['RABBIT_MQ_PASSWORD'],
-                                                              os.environ['RABBIT_MQ_HOST'],
-                                                              os.environ['RABBIT_MQ_PORT'],),
-
+        conn = amqp.Connection(host='%s:%s' % (os.environ['RABBIT_MQ_HOST'],
+                                               os.environ['RABBIT_MQ_PORT'],),
+                               userid='%s' % os.environ['RABBIT_MQ_USER'],
+                               password='%s' % os.environ['RABBIT_MQ_PASSWORD'],
                                virtual_host="/",
                                insist=False)
-        # host=settings.BROKER_URL,
 
         chan = conn.channel()
         name, jobs, consumers = chan.queue_declare(queue=settings.CELERY_DEFAULT_QUEUE,
