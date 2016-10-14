@@ -33,7 +33,7 @@ Web crawler/scrapper with:
 4. ~~CircleCI integration~~
 5. ~~QuantifiedCode integration~~
 6. Second iteration **[in progress]**
-    1. Basic features
+    1. ~~Basic features~~
     2. Limit crawling of subnets (e.g. 5 min wait per /24)
     3. Add header-based detection
     4. Joomla basic plugin
@@ -57,7 +57,7 @@ Web crawler/scrapper with:
 
 # Technologies
 - celery (with eventlet) to run tasks in parallel
-- flow to monitor celery tasks
+- flower to monitor celery tasks
 - RabbitMQ task queue
 - PostgresQL DB to store results
 - Django interface for results and monitoring of the backend
