@@ -14,6 +14,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        # get the number of jobs currently running
         conn = amqp.Connection(host='%s:%s' % (os.environ['RABBIT_MQ_HOST'],
                                                os.environ['RABBIT_MQ_PORT'],),
                                userid='%s' % os.environ['RABBIT_MQ_USER'],
@@ -24,10 +25,12 @@ class Command(BaseCommand):
         chan = conn.channel()
         name, jobs, consumers = chan.queue_declare(queue=settings.CELERY_DEFAULT_QUEUE,
                                                    passive=True)
-        print jobs
 
-        return
-
-        subdomains = Subdomain.objects.filter()
-        for subdomain in subdomains:
-            detect_cms.delay(subdomain.id)
+        # if under 10k jobs, send 100k jobs
+        if jobs < 1000:
+            subdomains = Subdomain.objects.filter()
+            for subdomain in subdomains[:100000]:
+                detect_cms.delay(subdomain.id)
+            return 1
+        else:
+            return 0
