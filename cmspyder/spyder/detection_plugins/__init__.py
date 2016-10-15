@@ -1,7 +1,8 @@
 from wordpress import WordPressPlugin
 from drupal import DrupalPlugin
+from joomla import JoomlaPlugin
 
-detection_classes = [WordPressPlugin, DrupalPlugin]
+detection_classes = [WordPressPlugin, DrupalPlugin, JoomlaPlugin]
 
 _instances = {}
 def _get_instance(cls):
@@ -16,5 +17,6 @@ def get_detection_plugins():
     plugins = []
     plugins.append(_get_instance(WordPressPlugin))
     plugins.append(_get_instance(DrupalPlugin))
+    plugins.append(_get_instance(JoomlaPlugin))
     return plugins
 
