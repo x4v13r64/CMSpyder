@@ -1,10 +1,13 @@
 import tldextract
+import socket
 
 from models import TLD, Domain, Subdomain
+
 
 def extract_subdomain(url):
     extract_result = tldextract.extract(url)
     return extract_result
+
 
 def import_subdomain(url):
     extract_result = extract_subdomain(url)
@@ -15,3 +18,52 @@ def import_subdomain(url):
     new_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
                                                     subdomain=extract_result.subdomain)
     return new_subdomain[0]
+
+
+def get_ip(domain):
+    """
+    This method returns the first IP address string that responds as the given domain name
+    """
+    try:
+        data = socket.gethostbyname(domain)
+        ip = repr(data)
+        return ip
+    except Exception:
+        return False
+
+
+def get_ip_ex(domain):
+    """
+    This method returns an array containing one or more IP address strings that respond as the
+    given domain name
+    """
+    try:
+        data = socket.gethostbyname_ex(domain)
+        ipx = repr(data[2])
+        return ipx
+    except Exception:
+        return False
+
+
+def get_host(ip):
+    """
+    This method returns the 'True Host' name for a given IP address
+    """
+    try:
+        data = socket.gethostbyaddr(ip)
+        host = repr(data[0])
+        return host
+    except Exception:
+        return False
+
+
+def get_alias(domain):
+    """
+    This method returns an array containing a list of aliases for the given domain
+    """
+    try:
+        data = socket.gethostbyname_ex(domain)
+        alias = repr(data[1])
+        return alias
+    except Exception:
+        return False
