@@ -1,7 +1,7 @@
+import re
+
 from base import BasePlugin
 from spyder.models import ScanResult
-
-import re
 
 
 class DrupalPlugin(BasePlugin):
@@ -36,7 +36,3 @@ class DrupalPlugin(BasePlugin):
         #     # p = re.compile('<(?:link|style)[^>]+sites(?:default|all)(?:themes|modules)')
         #     # result = p.search(html)
         #     # return result
-
-
-
-

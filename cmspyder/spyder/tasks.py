@@ -1,14 +1,14 @@
+from datetime import datetime
+
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 from celery import shared_task
 
 from detection_plugins import get_detection_plugins
 from domains.models import Subdomain
-from domains.utils import extract_subdomain, import_subdomain, get_ip
+from domains.utils import extract_subdomain, get_ip, import_subdomain
 from models import ScanError
 from utils import create_logger
-
-from datetime import datetime
 
 
 @shared_task

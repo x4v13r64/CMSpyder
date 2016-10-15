@@ -1,12 +1,11 @@
+import os
+
+import amqp
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from domains.models import Subdomain
 from spyder.tasks import detect_cms
-
-import amqp
-import os
-
-from django.conf import settings
 
 
 class Command(BaseCommand):

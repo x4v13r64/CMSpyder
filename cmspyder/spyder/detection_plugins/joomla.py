@@ -1,7 +1,7 @@
+import re
+
 from base import BasePlugin
 from spyder.models import ScanResult
-
-import re
 
 
 class JoomlaPlugin(BasePlugin):
@@ -21,4 +21,3 @@ class JoomlaPlugin(BasePlugin):
         for header in request.headers:
             if 'joomla' in header.lower() or 'joomla' in request.headers[header].lower():
                 return True
-

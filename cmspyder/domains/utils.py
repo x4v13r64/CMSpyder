@@ -1,5 +1,6 @@
-import tldextract
 import socket
+
+import tldextract
 
 from models import TLD, Domain, Subdomain
 
