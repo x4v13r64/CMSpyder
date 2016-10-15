@@ -33,30 +33,27 @@ Web crawler/scrapper with:
 5. ~~QuantifiedCode integration~~
 6. Second iteration **[in progress]**
     1. ~~Basic features~~
-    2. Limit crawling of subnets (e.g. 5 min wait per /24)
-    3. Add header-based detection
-    4. Joomla basic plugin
-    5. Drupal basic plugin
-    6. Magento basic plugin
-    7. Bug fixes
-    8. Test cases
-7. Flower integration to monitor tasks
-8. Backend hardening
+    2. Joomla basic plugin
+    3. Drupal basic plugin
+    4. Magento basic plugin
+    5. Limit crawling of subnets (e.g. 5 min wait per /24)
+    6. Bug fixes
+    7. Test cases
+6. Backend hardening
     1. Nginx/Gunicorn controller web
     2. celery as service
     3. Firewall rules for all machines
-9. Third iteration
+8. Third iteration
     1. Subdomain discovery
     2. Subdirectory discovery
     3. Other features
     4. Test cases
-10. Jekyll github-hosted website with daily statistics
-11. TBD
-12. Container (docker) architecture (currently not supported by VPS hosting)
+9. Jekyll github-hosted website with daily statistics
+10. TBD
+11. Container (docker) architecture (currently not supported by VPS hosting)
 
 # Technologies
 - celery (with eventlet) to run tasks in parallel
-- flower to monitor celery tasks
 - RabbitMQ task queue
 - PostgresQL DB to store results
 - Django interface for results and monitoring of the backend
