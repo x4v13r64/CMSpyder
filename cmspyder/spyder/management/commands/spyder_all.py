@@ -33,7 +33,5 @@ class Command(BaseCommand):
             # scan subdomains according to oldest last_scan entry
             for subdomain in Subdomain.objects.order_by('last_scan')[:100000]:
                 detect_cms.delay(subdomain.id)
-            return 1
         else:
             print "%s jobs: skipping" % jobs
-            return 0
