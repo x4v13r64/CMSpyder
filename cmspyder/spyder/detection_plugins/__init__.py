@@ -1,6 +1,7 @@
 from wordpress import WordPressPlugin
+from drupal import DrupalPlugin
 
-detection_classes = [WordPressPlugin]
+detection_classes = [WordPressPlugin, DrupalPlugin]
 
 _instances = {}
 def _get_instance(cls):
@@ -14,5 +15,6 @@ def _get_instance(cls):
 def get_detection_plugins():
     plugins = []
     plugins.append(_get_instance(WordPressPlugin))
+    plugins.append(_get_instance(DrupalPlugin))
     return plugins
 
