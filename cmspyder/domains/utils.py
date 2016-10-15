@@ -25,9 +25,7 @@ def get_ip(domain):
     This method returns the first IP address string that responds as the given domain name
     """
     try:
-        data = socket.gethostbyname(domain)
-        ip = repr(data)
-        return ip
+        return socket.gethostbyname(domain)
     except Exception:
         return False
 
@@ -38,9 +36,7 @@ def get_ip_ex(domain):
     given domain name
     """
     try:
-        data = socket.gethostbyname_ex(domain)
-        ipx = repr(data[2])
-        return ipx
+        return socket.gethostbyname_ex(domain)[2]
     except Exception:
         return False
 
@@ -50,9 +46,7 @@ def get_host(ip):
     This method returns the 'True Host' name for a given IP address
     """
     try:
-        data = socket.gethostbyaddr(ip)
-        host = repr(data[0])
-        return host
+        return socket.gethostbyaddr(ip)[0]
     except Exception:
         return False
 
@@ -62,8 +56,6 @@ def get_alias(domain):
     This method returns an array containing a list of aliases for the given domain
     """
     try:
-        data = socket.gethostbyname_ex(domain)
-        alias = repr(data[1])
-        return alias
+        return socket.gethostbyname_ex(domain)[1]
     except Exception:
         return False
