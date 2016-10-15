@@ -20,10 +20,10 @@ admin.site.register(Domain, DomainAdmin)
 
 
 class SubdomainAdmin(admin.ModelAdmin):
-    list_display = ['id', 'subdomain', 'domain', 'get_domain_tld']
+    list_display = ['id', 'subdomain', 'domain', 'get_domain_tld', 'last_scan']
     list_filter = ['domain__tld']
     search_fields = ['subdomain', 'domain__domain']
-    readonly_fields = ['domain', 'subdomain']
+    readonly_fields = ['domain', 'subdomain', 'last_scan']
 
     def get_domain_tld(self, obj):
         return obj.domain.tld
