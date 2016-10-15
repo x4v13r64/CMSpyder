@@ -24,7 +24,7 @@ class Command(BaseCommand):
                                insist=False)
 
         chan = conn.channel()
-        name, jobs, consumers = chan.queue_declare(queue=settings.CELERY_DEFAULT_QUEUE,
+        name, jobs, consumers = chan.queue_declare(queue=settings.CMSPYDER_DETECT_CMS_QUEUE,
                                                    passive=True)
 
         # if under 10k jobs, send 100k jobs
