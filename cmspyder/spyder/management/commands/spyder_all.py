@@ -31,8 +31,8 @@ class Command(BaseCommand):
         # if under 10k jobs, send 100k jobs
         if jobs < 1000:
             print "%s jobs: Will add 100k jobs" % jobs
-            subdomains = Subdomain.objects.filter()
-            for subdomain in subdomains[:100000]:
+            # scan subdomains according to oldest last_scan entry
+            for subdomain in Subdomain.objects.order_by('last_scan')[:100000]:
                 detect_cms.delay(subdomain.id)
             return 1
         else:
