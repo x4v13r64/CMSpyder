@@ -4,7 +4,7 @@ from celery import shared_task
 
 from detection_plugins import get_detection_plugins
 from domains.models import Subdomain
-from domains.utils import import_subdomain
+from domains.utils import extract_subdomain, import_subdomain
 from models import ScanError
 from utils import create_logger
 
@@ -13,19 +13,23 @@ from datetime import datetime
 
 @shared_task
 def discover_domains(subdomain_id, request_result_text):
-    # todo set max time for these tasks
 
     # Create and start logger
     logger = create_logger('discover_{0}.log'.format(subdomain_id))
 
     logger.info('discover {0} START'.format(subdomain_id))
 
+    # keep list or extracted subdomains to limit db queries
+    extracted_subdomain = []
+
     for link in BeautifulSoup(request_result_text, parseOnlyThese=SoupStrainer('a')):
-        if link.has_attr('href'):
-            if '://' in link['href']:  # todo improve this
-                logger.info('found {0}'.format(link['href']))
-                # todo make it so this is not called multiple times for the same domain
-                import_subdomain(link['href'])
+        if link.has_attr('href') and '://' in link['href']:  # todo improve this
+            href = link['href']
+            extract_result = extract_subdomain(href)
+            if extract_result not in extracted_subdomain:
+                extracted_subdomain.append(extract_result)
+                new_subdomain = import_subdomain(href)
+                logger.info('discover found {0}'.format(new_subdomain))
 
     logger.info('discover {0} DONE'.format(subdomain_id))
 
