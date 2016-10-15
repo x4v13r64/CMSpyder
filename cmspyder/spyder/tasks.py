@@ -45,8 +45,8 @@ def detect_cms(subdomain_id):
 
     logger.info('detect {0} INIT'.format(subdomain))
 
+    # retrieve ip for subdomain
     subdomain_ip = get_ip(subdomain.__unicode__())
-    # logger.info('->> {0} {1}'.format(subdomain, subdomain_ip))
 
     # update last scan datetime
     subdomain.last_scan = datetime.now()
@@ -114,7 +114,9 @@ def detect_cms(subdomain_id):
             plugin.detect(subdomain, request_results)
 
     else:
+
         logger.info('detect {0} NO IP'.format(subdomain))
 
     subdomain.save()
+
     logger.info('detect {0} DONE'.format(subdomain))
