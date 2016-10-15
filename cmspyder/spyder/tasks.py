@@ -8,6 +8,8 @@ from domains.utils import import_subdomain
 from models import ScanError
 from utils import create_logger
 
+from datetime import datetime
+
 
 @shared_task
 def discover_domains(subdomain_id, request_result_text):
@@ -33,6 +35,10 @@ def detect_cms(subdomain_id):
 
     # retrieve subdomain object
     subdomain = Subdomain.objects.get(id=subdomain_id)
+
+    # update last scan datetime
+    subdomain.last_scan = datetime.now()
+    subdomain.save()
 
     # Create and start logger
     logger = create_logger('detect_{0}.log'.format(subdomain.id))
