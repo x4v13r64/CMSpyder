@@ -1,8 +1,9 @@
 from wordpress import WordPressPlugin
 from drupal import DrupalPlugin
 from joomla import JoomlaPlugin
+from wappalyzer import WappalyzerPlugin
 
-detection_classes = [WordPressPlugin, DrupalPlugin, JoomlaPlugin]
+detection_classes = [WordPressPlugin, DrupalPlugin, JoomlaPlugin, WappalyzerPlugin]
 
 _instances = {}
 def _get_instance(cls):
@@ -15,8 +16,9 @@ def _get_instance(cls):
 
 def get_detection_plugins():
     plugins = []
-    plugins.append(_get_instance(WordPressPlugin))
-    plugins.append(_get_instance(DrupalPlugin))
-    plugins.append(_get_instance(JoomlaPlugin))
+    # plugins.append(_get_instance(WordPressPlugin))
+    # plugins.append(_get_instance(DrupalPlugin))
+    # plugins.append(_get_instance(JoomlaPlugin))
+    plugins.append(_get_instance(WappalyzerPlugin))
     return plugins
 
