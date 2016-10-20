@@ -22,5 +22,5 @@ class WappalyzerPlugin(BasePlugin):
                     ScanResult.objects.create(subdomain=subdomain,
                                               type=r.lower(),
                                               version=results[r]['version'] if
-                                              results[r]['version'] else None)
+                                              results[r]['version'] else '')
 

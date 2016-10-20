@@ -15,7 +15,7 @@ class ScanResult(TimeStampedModel):
 class PluginResult(TimeStampedModel):
     scan_result = models.ForeignKey(Domain, related_name='plugin_result')
     name = models.CharField(max_length=250)
-    version = models.CharField(max_length=50)
+    version = models.CharField(max_length=50, blank=True)
 
 
 class ScanError(TimeStampedModel):
