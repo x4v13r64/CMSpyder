@@ -33,9 +33,9 @@ Web crawler/scrapper with:
 5. ~~QuantifiedCode integration~~
 6. Second iteration **[in progress]**
     1. ~~Basic features~~
-    2. Joomla basic plugin
-    3. Drupal basic plugin
-    4. Magento basic plugin
+    2. ~~Joomla basic plugin~~
+    3. ~~Drupal basic plugin~~
+    4. ~~Magento basic plugin~~
     5. Limit crawling of subnets (e.g. 5 min wait per /24)
     6. Bug fixes
     7. Test cases
