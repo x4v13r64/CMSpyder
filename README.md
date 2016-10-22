@@ -48,7 +48,7 @@ Web crawler/scrapper with:
     2. Subdirectory discovery
     3. Other features
     4. Test cases
-9. Jekyll github-hosted website with daily statistics
+9. Move GitHub site to Jekyll
 10. TBD
 11. Container (docker) architecture (currently not supported by VPS hosting)
 
