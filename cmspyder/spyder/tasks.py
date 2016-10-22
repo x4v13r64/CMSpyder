@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.utils import timezone
 
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
@@ -49,7 +50,7 @@ def detect_cms(subdomain_id):
     subdomain_ip = get_ip(subdomain.__unicode__())
 
     # update last scan datetime
-    subdomain.last_scan = datetime.now()
+    subdomain.last_scan = timezone.now()
 
     if subdomain_ip:
 
