@@ -6,19 +6,25 @@ from models import TLD, Domain, Subdomain
 
 
 def extract_subdomain(url):
-    extract_result = tldextract.extract(url)
-    return extract_result
+    extract_result = tldextract.extract(url.lower())
+    # make sure we have a valid domain and TLD
+    if extract_result.domain and extract_result.suffix:
+        return extract_result
+    else:
+        return None
 
 
 def import_subdomain(url):
     extract_result = extract_subdomain(url)
-
-    new_tld = TLD.objects.get_or_create(tld=extract_result.suffix)
-    new_domain = Domain.objects.get_or_create(tld=new_tld[0],
-                                              domain=extract_result.domain)
-    new_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
-                                                    subdomain=extract_result.subdomain)
-    return new_subdomain[0]
+    if extract_result:
+        new_tld = TLD.objects.get_or_create(tld=extract_result.suffix)
+        new_domain = Domain.objects.get_or_create(tld=new_tld[0],
+                                                  domain=extract_result.domain)
+        new_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
+                                                        subdomain=extract_result.subdomain)
+        return new_subdomain[0]
+    else:
+        return None
 
 
 def get_ip(domain):

@@ -4,7 +4,9 @@ from django.db import models
 
 
 class TLD(models.Model):
-    tld = models.CharField(max_length=250)
+    tld = models.CharField(blank=False,
+                           max_length=250,
+                           default=None)
 
     def __unicode__(self):
         return u"{}".format(self.tld)
@@ -14,10 +16,18 @@ class TLD(models.Model):
         verbose_name_plural = 'TLDs'
         ordering = ('tld',)
 
+    # TLD should never be an empty string
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.tld == '':
+            raise ValidationError('TLD cannot be an empty string.')
+
 
 class Domain(models.Model):
     tld = models.ForeignKey(TLD, related_name='domain')
-    domain = models.CharField(max_length=250)
+    domain = models.CharField(blank=False,
+                              max_length=250,
+                              default=None)
 
     def __unicode__(self):
         return u"{}.{}".format(self.domain, self.tld)
@@ -27,6 +37,12 @@ class Domain(models.Model):
         verbose_name_plural = 'Domains'
         unique_together = [('domain', 'tld')]
         ordering = ('domain',)
+
+    # domain should never be an empty string
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.tld == '':
+            raise ValidationError('domain cannot be an empty string.')
 
 
 class Subdomain(models.Model):
