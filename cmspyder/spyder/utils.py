@@ -11,8 +11,8 @@ def create_logger(domain):
                              settings.CRAWLER_LOG_FILE_NAME.format(domain))
     logger = logging.getLogger('crawler %s' % domain)
     logger.setLevel(logging.DEBUG)
-    handler = logging.FileHandler(file_name)
+    # handler = logging.FileHandler(file_name)
     f = logging.Formatter(settings.CRAWLER_LOG_FORMAT)
-    handler.setFormatter(f)
-    logger.addHandler(handler)
+    # handler.setFormatter(f)
+    # logger.addHandler(handler)
     return logger
