@@ -30,10 +30,13 @@ class Command(BaseCommand):
                         (Subdomain.objects.exclude(last_ip__isnull=True).count(),
                          Subdomain.objects.exclude(last_ip__isnull=True).count() *
                          100/Subdomain.objects.count()))
-            index.write('<li>Domains fingerprinted: %s (%s%% of all domains)</li>\n' %
+            index.write('<li>Domains fingerprinted: %s (%s%% of all domains & %s%% of '
+                        'analyzed domains)</li>\n' %
                         (ScanResult.objects.values('subdomain').distinct().count(),
                          ScanResult.objects.values('subdomain').distinct().count() *
-                         100/Subdomain.objects.count()))
+                         100/Subdomain.objects.count(),
+                        ScanResult.objects.values('subdomain').distinct().count() *
+                        100/Subdomain.objects.exclude(last_ip__isnull=True).count()))
             index.write('</ul>\n')
 
             index.write('<h2>CMS detection results</h2>\n')
@@ -47,9 +50,12 @@ class Command(BaseCommand):
 
                 index.write('<ul>\n')
                 index.write('<li><span>total count: %s (%s%% of CMS detections)</span></li>\n' %
-                            (ScanResult.objects.filter(type=result_type['type']).count(),
-                             ScanResult.objects.filter(type=result_type['type']).count() *
-                             100/ScanResult.objects.count()))
+                            (ScanResult.objects.filter(type=result_type['type']).
+                             values('subdomain').distinct().count(),
+                             ScanResult.objects.filter(type=result_type['type']).
+                             values('subdomain').distinct().count() *
+                             100/ScanResult.objects.filter().
+                             values('subdomain').distinct().count()))
 
                 for version in \
                         scan_results_for_type.values('version').distinct().order_by('version'):
@@ -58,10 +64,13 @@ class Command(BaseCommand):
                                 '(%s%% of %s detections)</span></li>\n' %
                                 (version['version'] if version['version'] else 'unknown',
                                  ScanResult.objects.filter(type=result_type['type'],
-                                                           version=version['version']).count(),
+                                                           version=version['version']).
+                                 values('subdomain').distinct().count(),
                                  ScanResult.objects.filter(type=result_type['type'],
-                                                           version=version['version']).count() *
-                                 100/ScanResult.objects.filter(type=result_type['type']).count(),
+                                                           version=version['version']).
+                                 values('subdomain').distinct().count() *
+                                 100/ScanResult.objects.filter(type=result_type['type']).
+                                 values('subdomain').distinct().count(),
                                  result_type['type']))
                     index.write('</ul>\n')
 
