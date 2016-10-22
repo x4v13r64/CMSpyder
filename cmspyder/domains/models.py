@@ -6,7 +6,8 @@ from django.db import models
 class TLD(models.Model):
     tld = models.CharField(blank=False,
                            max_length=250,
-                           default=None)
+                           default=None,
+                           unique=True)
 
     def __unicode__(self):
         return u"{}".format(self.tld)
