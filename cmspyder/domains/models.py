@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class TLD(models.Model):
     tld = models.CharField(blank=False,
-                           max_length=250)
+                           max_length=250,
+                           default=None)
 
     def __unicode__(self):
         return u"{}".format(self.tld)
@@ -19,7 +21,8 @@ class TLD(models.Model):
 class Domain(models.Model):
     tld = models.ForeignKey(TLD, related_name='domain')
     domain = models.CharField(blank=False,
-                              max_length=250)
+                              max_length=250,
+                              default=None)
 
     def __unicode__(self):
         return u"{}.{}".format(self.domain, self.tld)
