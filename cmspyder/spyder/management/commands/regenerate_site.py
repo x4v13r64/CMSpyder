@@ -1,5 +1,5 @@
 import os
-import datetime
+from django.utils import timezone
 
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -74,7 +74,7 @@ class Command(BaseCommand):
 
                 index.write('</ul>\n')
 
-            index.write('&lt;generated %s&gt;\n' % datetime.datetime.now().
+            index.write('&lt;generated %s&gt;\n' % timezone.now().
                         strftime("%Y-%m-%d %H:%M"))
 
             index.write('</html>\n')
