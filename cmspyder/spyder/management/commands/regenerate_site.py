@@ -1,22 +1,11 @@
 import os
+import datetime
 
-import amqp
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from domains.models import Subdomain
 from spyder.models import ScanResult
-from spyder.tasks import detect_cms
-
-"""
-currently running jobs
-total website count
-total websites with detection & %
-list of all detected CMSs with count & %
-list of all CMS versions with count & %
-
-http://stackoverflow.com/questions/3432673/get-distinct-values-of-queryset-by-field
-"""
 
 
 class Command(BaseCommand):
@@ -24,27 +13,56 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        # get the number of jobs currently running
-        conn = amqp.Connection(host='%s:%s' % (os.environ['RABBIT_MQ_HOST'],
-                                               os.environ['RABBIT_MQ_PORT'],),
-                               userid='%s' % os.environ['RABBIT_MQ_USER'],
-                               password='%s' % os.environ['RABBIT_MQ_PASSWORD'],
-                               virtual_host="/",
-                               insist=False)
+        with open(os.path.join(settings.BASE_DIR, '../docs/index.html'), 'w') as index:
 
-        chan = conn.channel()
-        name, jobs, consumers = chan.queue_declare(queue=settings.CMSPYDER_DETECT_CMS_QUEUE,
-                                                   passive=True)
+            index.write('<html>')
+            index.write('<h1>CMSpyder</h1>')
+            index.write('<p>A web crawler/scrapper with CMS detection '
+                        '(<a href=\'https://github.com/j4v/CMSpyder\'>github.com/j4v/CMSpyder'
+                        '</a>).</p>')
 
-        all_subdomains = Subdomains.objects.filter()
-        subdomain_count = len(all_subdomains)
+            index.write('<h2>General statistics</h2>')
+            index.write('<ul>')
+            subdomains = Subdomain.objects.filter()
+            index.write('<li>Domain count: %s</li>' % len(subdomains))
 
-        all_scan_results = ScanResult.objects.filter()
-        unique_scan_results = all_scan_results.values('subdomain').annotate(n=models.Count("pk"))
-        unique_scan_results_count = len(unique_scan_results)
+            scan_results = ScanResult.objects.filter()
+            scan_results_unique_subdomain = scan_results.values('subdomain').distinct()
+            index.write('<li>Unique domains analyzed: %s</li>' % len(scan_results_unique_subdomain))
+            index.write('<li>Analysis count: %s</li>' % len(scan_results))
+            index.write('</ul>')
 
-        unique_cms_results = all_scan_results.values('cms').annotate(n=models.Count("pk"))
-        # can then get for each cms by making a filter
+            index.write('<h2>CMS detection results</h2>')
+            unique_scan_results = scan_results.values('type').distinct()
 
+            # TODO these stats are incorrect as they aren't for unique detections
+            for result_type in unique_scan_results:
+                index.write('<h3>%s</h3>' % result_type['type'])
 
-        # TODO rebuild index.html
+                scan_results_for_type = scan_results.filter(type=result_type['type'])
+
+                index.write('<ul>')
+                index.write('<li>total count: %s (%s%% of CMS detections)</li>' %
+                            (len(scan_results_for_type),
+                             len(scan_results_for_type)*100/len(scan_results)))
+
+                scan_results_versions_for_type = \
+                    scan_results_for_type.values('version').distinct()
+
+                for version in scan_results_versions_for_type:
+                    index.write('<ul>')
+                    scan_results_versions_for_type_version = \
+                        ScanResult.objects.filter(type=result_type['type'],
+                                                  version=version['version'])
+                    index.write('<li>version \'%s\' count: %s (%s%% of %s detections)</li>' %
+                                (version['version'] if version['version'] else 'unknown',
+                                 len(scan_results_versions_for_type_version),
+                                 len(scan_results_versions_for_type_version) *
+                                 100/len(scan_results_for_type),
+                                 result_type['type']))
+                    index.write('</ul>')
+
+                index.write('</ul>')
+
+            index.write('&lt;generated %s&gt;' % datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+            index.write('</html>')
