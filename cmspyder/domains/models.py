@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.core.exceptions import ValidationError
 
 
 class TLD(models.Model):
@@ -16,6 +15,12 @@ class TLD(models.Model):
         verbose_name = 'TLD'
         verbose_name_plural = 'TLDs'
         ordering = ('tld',)
+
+    # TLD should never be an empty string
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.tld == '':
+            raise ValidationError('TLD cannot be an empty string.')
 
 
 class Domain(models.Model):
@@ -32,6 +37,12 @@ class Domain(models.Model):
         verbose_name_plural = 'Domains'
         unique_together = [('domain', 'tld')]
         ordering = ('domain',)
+
+    # domain should never be an empty string
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.tld == '':
+            raise ValidationError('domain cannot be an empty string.')
 
 
 class Subdomain(models.Model):
