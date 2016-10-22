@@ -4,7 +4,8 @@ from django.db import models
 
 
 class TLD(models.Model):
-    tld = models.CharField(max_length=250)
+    tld = models.CharField(blank=False,
+                           max_length=250)
 
     def __unicode__(self):
         return u"{}".format(self.tld)
@@ -17,7 +18,8 @@ class TLD(models.Model):
 
 class Domain(models.Model):
     tld = models.ForeignKey(TLD, related_name='domain')
-    domain = models.CharField(max_length=250)
+    domain = models.CharField(blank=False,
+                              max_length=250)
 
     def __unicode__(self):
         return u"{}.{}".format(self.domain, self.tld)
