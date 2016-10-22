@@ -35,21 +35,19 @@ class Command(BaseCommand):
                         (ScanResult.objects.values('subdomain').distinct().count(),
                          ScanResult.objects.values('subdomain').distinct().count() *
                          100/Subdomain.objects.count(),
-                        ScanResult.objects.values('subdomain').distinct().count() *
-                        100/Subdomain.objects.exclude(last_ip__isnull=True).count()))
+                         ScanResult.objects.values('subdomain').distinct().count() *
+                         100/Subdomain.objects.exclude(last_ip__isnull=True).count()))
             index.write('</ul>\n')
 
             index.write('<h2>CMS detection results</h2>\n')
-            # TODO these stats are incorrect as they aren't for unique detections
-            index.write('<ul id="result_tree">\n')
             for result_type in \
                     ScanResult.objects.filter().values('type').distinct().order_by('type'):
-                index.write('<li><span>%s</span></li>\n' % result_type['type'])
+                index.write('<h3>%s</h3>\n' % result_type['type'])
 
                 scan_results_for_type = ScanResult.objects.filter(type=result_type['type'])
 
                 index.write('<ul>\n')
-                index.write('<li><span>total count: %s (%s%% of CMS detections)</span></li>\n' %
+                index.write('<li>total count: %s (%s%% of CMS detections)</li>\n' %
                             (ScanResult.objects.filter(type=result_type['type']).
                              values('subdomain').distinct().count(),
                              ScanResult.objects.filter(type=result_type['type']).
@@ -60,8 +58,8 @@ class Command(BaseCommand):
                 for version in \
                         scan_results_for_type.values('version').distinct().order_by('version'):
                     index.write('<ul>\n')
-                    index.write('<li><span>version \'%s\' count: %s '
-                                '(%s%% of %s detections)</span></li>\n' %
+                    index.write('<li>version \'%s\' count: %s '
+                                '(%s%% of %s detections)</li>\n' %
                                 (version['version'] if version['version'] else 'unknown',
                                  ScanResult.objects.filter(type=result_type['type'],
                                                            version=version['version']).
@@ -75,17 +73,8 @@ class Command(BaseCommand):
                     index.write('</ul>\n')
 
                 index.write('</ul>\n')
-            index.write('</ul>\n')
 
-            index.write('&lt;generated %s&gt;\n' % datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
-
-            index.write('<script src=\"http://code.jquery.com/jquery-1.10.1.min.js\"></script>\n<script type=\"text/javascript\">$(function(){$(\'#result_tree\').find(\'span\').click(function(e){$(this).parent().children(\'ul\').toggle();});});</script>\n')
-
-            # index.write('<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>')
-            # index.write('<script type="text/javascript">')
-            # index.write('$(\'#tree\').find(\'span\').click(function(e){$(this).parent().'
-            #             'children(\'ul\').toggle();});')
-            # # index.write('$(\'.tree\').find(\'span\').parent().children(\'ul\').hide();')
-            # index.write('</script>')
+            index.write('&lt;generated %s&gt;\n' % datetime.datetime.now().
+                        strftime("%Y-%m-%d %H:%M"))
 
             index.write('</html>\n')
