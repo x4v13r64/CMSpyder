@@ -50,8 +50,8 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
-# maximum number of tasks a pool worker process can execute before it’s replaced with a new one,
-# to release memory leaks
+# maximum number of tasks a pool worker process can execute before it's replaced with a new one,
+# to release workers who cause memory leaks
 CELERYD_MAX_TASKS_PER_CHILD = 500
 # task hard time limit in second
 CELERYD_TASK_TIME_LIMIT = 120
