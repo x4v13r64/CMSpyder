@@ -1,15 +1,14 @@
-from django.utils import timezone
-
 import requests
 from bs4 import BeautifulSoup, SoupStrainer
 from celery import shared_task
+from django.utils import timezone
+from fake_useragent import UserAgent
 
 from detection_plugins import get_detection_plugins
 from domains.models import Subdomain
 from domains.utils import extract_subdomain, get_ip, import_subdomain
 from models import ScanError
 from utils import create_logger
-from fake_useragent import UserAgent
 
 
 @shared_task

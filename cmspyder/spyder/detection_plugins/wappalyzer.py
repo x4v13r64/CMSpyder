@@ -1,6 +1,6 @@
 from base import BasePlugin
-from spyder.models import ScanResult
 from spyder.drivers.wappalyzer import WappalyzerDriver
+from spyder.models import ScanResult
 
 
 class WappalyzerPlugin(BasePlugin):
@@ -23,4 +23,3 @@ class WappalyzerPlugin(BasePlugin):
                                               type=r.lower(),
                                               version=results[r]['version'] if
                                               results[r]['version'] else '')
-
