@@ -22,6 +22,9 @@ def import_subdomain(url):
                                                   domain=extract_result.domain)
         new_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
                                                         subdomain=extract_result.subdomain)
+        # also create with empty subdomain
+        new_empty_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
+                                                              subdomain="")
         return new_subdomain[0]
     else:
         return None
