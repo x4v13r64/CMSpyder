@@ -9,6 +9,7 @@ from domains.models import Subdomain
 from domains.utils import extract_subdomain, get_ip, import_subdomain
 from models import ScanError
 from utils import create_logger
+from fake_useragent import UserAgent
 
 
 @shared_task
@@ -36,6 +37,8 @@ def discover_domains(subdomain_id, request_result_text):
 
 @shared_task
 def detect_cms(subdomain_id):
+
+    ua = UserAgent()
 
     # retrieve subdomain object
     subdomain = Subdomain.objects.get(id=subdomain_id)
@@ -76,7 +79,10 @@ def detect_cms(subdomain_id):
                         request_results[path] = \
                             requests.get(u"http://%s%s" % (subdomain, path),
                                          verify=False,
-                                         timeout=10)
+                                         timeout=10,
+                                         headers={
+                                             'User-Agent': ua.random,
+                                         })
                         logger.info('detect request {0} DONE'.format(subdomain))
                     except requests.exceptions.HTTPError as e:
                         ScanError.objects.create(type='HTTP error',
