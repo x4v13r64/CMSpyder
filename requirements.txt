@@ -10,4 +10,4 @@ eventlet
 dnspython
 isort
 tldextract
-PyV8
+fake-useragent
