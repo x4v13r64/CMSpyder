@@ -1,8 +1,9 @@
 import socket
 
 import tldextract
+import re
 
-from models import TLD, Domain, Subdomain
+from models import TLD, Domain, Subdomain, IP
 
 
 def extract_subdomain(url):
@@ -11,6 +12,13 @@ def extract_subdomain(url):
     if extract_result.domain and extract_result.suffix:
         return extract_result
     else:
+        # try to extract ip from url
+        if extract_result.domain:
+            ip_list = re.findall(r'[0-9]+(?:\.[0-9]+){3}', extract_result.domain)
+            if ip_list:
+                for ip in ip_list:
+                    new_ip = IP.objects.get_or_create(ip=ip)
+        # return nothing
         return None
 
 
