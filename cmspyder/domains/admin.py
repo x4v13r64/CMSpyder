@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models import TLD, Domain, Subdomain
+from models import TLD, Domain, Subdomain, IP
 from spyder.tasks import detect_cms
 
 
@@ -38,3 +38,10 @@ class SubdomainAdmin(admin.ModelAdmin):
         self.message_user(request, 'Task(s) created')
     detect_cms.short_description = 'Detect CMS'
 admin.site.register(Subdomain, SubdomainAdmin)
+
+
+class IPAdmin(admin.ModelAdmin):
+    list_display = ['id', 'ip']
+    search_fields = ['ip']
+    readonly_fields = ['ip']
+admin.site.register(IP, IPAdmin)
