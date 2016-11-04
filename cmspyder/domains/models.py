@@ -63,3 +63,14 @@ class Subdomain(models.Model):
         verbose_name_plural = 'Subdomains'
         unique_together = [('subdomain', 'domain')]
         ordering = ('subdomain',)
+
+
+class IP(models.Model):
+    ip = models.GenericIPAddressField(null=False)
+
+    def __unicode__(self):
+        return u"{}".format(self.ip)
+
+    class Meta(object):
+        verbose_name = 'IP address'
+        verbose_name_plural = 'IP addresses'
