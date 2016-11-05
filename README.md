@@ -4,14 +4,14 @@
 [![codecov](https://codecov.io/gh/j4v/CMSpyder/branch/master/graph/badge.svg)](https://codecov.io/gh/j4v/CMSpyder)
 
 # Project
-Web crawler/scrapper with:
+Distributed web crawler/scrapper with:
 - CMS detection
     - Plugin-based architecture
     - Version and plugin detection
     - Maintains historic versions
-- Subdomain bruteforcer (common subdomains e.g. blog., store.)
+- Subdomain light bruteforcer (common subdomains e.g. blog., store.)
 - Subdomain scrapper (1-deep)
-- Subdirectory bruteforcer (common directories e.g. /blog, /wp)
+- Subdirectory light bruteforcer (common directories e.g. /blog, /wp)
 - Web interface for results and monitoring
 - Static website to view results
     - Updated with daily statistics
@@ -27,36 +27,21 @@ Web crawler/scrapper with:
 # Milestones
 1. ~~Prototype django application using celery~~
 2. ~~Initial architecture for plugin-based detection~~
-    1. ~~WordPress basic plugin~~
 3. ~~Initial bakend configuration~~
-4. ~~CircleCI integration~~
-5. ~~QuantifiedCode integration~~
-6. Second iteration **[in progress]**
-    1. ~~Basic features~~
-    2. ~~Joomla basic plugin~~
-    3. ~~Drupal basic plugin~~
-    4. ~~Magento basic plugin~~
-    5. Limit crawling of subnets (e.g. 5 min wait per /24)
-    6. Bug fixes
-    7. Test cases
-6. Backend hardening
-    1. Nginx/Gunicorn controller web
-    2. celery as service
-    3. Firewall rules for all machines
+4. ~~Third-party CI integration~~
+5. ~~Second iteration~~
+6. ~~Move GitHub site to Jekyll~~
+7. Container (docker) build
 8. Third iteration
     1. Subdomain discovery
     2. Subdirectory discovery
-    3. Other features
-    4. Test cases
-9. Move GitHub site to Jekyll
-10. TBD
-11. Container (docker) architecture (currently not supported by VPS hosting)
-
-# Technologies
-- celery (with eventlet) to run tasks in parallel
-- RabbitMQ task queue
-- PostgresQL DB to store results
-- Django interface for results and monitoring of the backend
-- Nginx and Gunicorn for controller web
-- Jekyll for public-facing sites and results
-- Docker for worker containers & Docker Machine for deployment
+    3. Limit crawling of subnets (e.g. 5 min wait per /24)
+    4. Bug fixes
+    5. Test cases
+9. Distributed architecture
+    1. MongoDB cluster
+10. Network hardening
+11. Better Jekull website
+    1. Statistics, graphs, text search
+12. Elasticsearch integration    
+11. TBD
