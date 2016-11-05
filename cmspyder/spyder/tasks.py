@@ -55,7 +55,7 @@ def detect_cms(subdomain_id):
     logger.info('detect {0} INIT'.format(subdomain))
 
     # retrieve ip for subdomain
-    subdomain_ip = get_ip(subdomain.__unicode__())
+    subdomain_ip = get_ip(subdomain.__str__())
 
     # update last scan datetime
     subdomain.last_scan = timezone.now()

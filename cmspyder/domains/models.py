@@ -9,7 +9,7 @@ class TLD(models.Model):
                            default=None,
                            unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"{}".format(self.tld)
 
     class Meta(object):
@@ -30,7 +30,7 @@ class Domain(models.Model):
                               max_length=250,
                               default=None)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"{}.{}".format(self.domain, self.tld)
 
     class Meta(object):
@@ -55,11 +55,11 @@ class Subdomain(models.Model):
     # the link
     discovered_by = models.ForeignKey('self', null=True, related_name='discovered')
 
-    def __unicode__(self):
+    def __str__(self):
         if self.subdomain:
             return u"{}.{}".format(self.subdomain, self.domain)
         else:
-            return self.domain.__unicode__()
+            return self.domain.__str__()
 
     class Meta(object):
         verbose_name = 'Subdomain'
@@ -71,7 +71,7 @@ class Subdomain(models.Model):
 class IP(models.Model):
     ip = models.GenericIPAddressField(null=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"{}".format(self.ip)
 
     class Meta(object):
