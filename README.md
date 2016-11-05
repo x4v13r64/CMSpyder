@@ -16,14 +16,6 @@ Distributed www crawler/scrapper with:
 - Static website to view results
     - Updated with daily statistics
 
-#  Running
-- Start the RabbitMQ server
-`$ rabbitmq-server`
-- Start the worker process
-`$ DJANGO_SETTINGS_MODULE='cmspyder.settings.prod' celery -A cmspyder worker --concurrency=50 --pool=eventlet  --without-gossip -Q cmspyder_detect_cms_queue, cmspyder_discover_domains_queue`
-- Start django
-`$ python manage.py runserver 0.0.0.0:80 --settings=cmspyder.settings.dev --insecure`
-
 # Milestones
 1. ~~Prototype django application using celery~~
 2. ~~Initial architecture for plugin-based detection~~
@@ -41,7 +33,15 @@ Distributed www crawler/scrapper with:
 9. Distributed architecture
     1. MongoDB cluster
 10. Network hardening
-11. Better Jekull website
+11. Better Jekyll website
     1. Statistics, graphs, text search
 12. Elasticsearch integration    
 13. TBD
+
+#  Running
+- Start the RabbitMQ server
+`$ rabbitmq-server`
+- Start the worker process
+`$ DJANGO_SETTINGS_MODULE='cmspyder.settings.prod' celery -A cmspyder worker --concurrency=50 --pool=eventlet  --without-gossip -Q cmspyder_detect_cms_queue, cmspyder_discover_domains_queue`
+- Start django
+`$ python manage.py runserver 0.0.0.0:80 --settings=cmspyder.settings.dev --insecure`
