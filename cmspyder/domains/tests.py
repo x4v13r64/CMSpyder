@@ -3,8 +3,6 @@ from django.test import TestCase
 from domains.utils import *
 from domains.models import *
 
-# Create your tests here.
-
 
 class UtilsTestCase(TestCase):
     def setUp(self):
