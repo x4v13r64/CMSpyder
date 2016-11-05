@@ -25,8 +25,11 @@ def discover_domains(subdomain_id, request_result_text):
     # keep list or extracted subdomains to limit db queries
     extracted_subdomain = []
 
-    for link in BeautifulSoup(request_result_text, parseOnlyThese=SoupStrainer('a')):
-        if link.has_attr('href') and '://' in link['href']:  # todo improve this
+    for link in BeautifulSoup(request_result_text,
+                              'lxml',
+                              parseOnlyThese=SoupStrainer('a')):
+        # todo this only saves 'href' attributes in 'a' elements, can be missing valid entries
+        if link.has_attr('href'):
             href = link['href']
             extract_result = extract_subdomain(href)
             if extract_result not in extracted_subdomain:
@@ -60,13 +63,11 @@ def detect_cms(subdomain_id):
     if subdomain_ip:
 
         # update domain ip
-        # todo this should be historic (not overwrite
+        # todo this should be historic (not overwrite)
         subdomain.last_ip = subdomain_ip
 
         # get all detection plugins
         detection_plugins = get_detection_plugins()
-
-        # todo start by resolving IP
 
         # todo should it iterate on all files after any type of error (e.g. timeout)?
 
