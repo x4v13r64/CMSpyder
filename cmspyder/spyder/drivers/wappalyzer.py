@@ -1,8 +1,11 @@
 import ast
-import json
-import os
 # import third_party.PyV8_binaries.PyV8 as PyV8
 from urllib.parse import urlparse
+import json
+import re
+import warnings
+import os
+from bs4 import BeautifulSoup
 
 from django.conf import settings
 
@@ -59,15 +62,6 @@ from django.conf import settings
 # ---------------------------------------------------------------------------------------
 
 __credit__ = "https://github.com/nemurici/python3-wappalyzer"
-
-import json
-import re
-import warnings
-import os
-import logging
-from bs4 import BeautifulSoup
-
-logger = logging.getLogger(name=__name__)
 
 class WappalyzerDriver(object):
     """

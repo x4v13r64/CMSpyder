@@ -1,3 +1,5 @@
+import os
+
 from .base import INSTALLED_APPS, MIDDLEWARE_CLASSES
 
 # SECURITY WARNING: don't run with debug turned on in production!
