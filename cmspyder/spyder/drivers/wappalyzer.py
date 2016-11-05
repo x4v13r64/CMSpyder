@@ -12,11 +12,11 @@ class WappalyzerDriver(object):
     def __init__(self):
 
         f1 = open(os.path.join(settings.BASE_DIR,
-                               'third-party/Wappalyzer/src/wappalyzer.js'))
+                               'third_party/Wappalyzer/src/wappalyzer.js'))
         f2 = open(os.path.join(settings.BASE_DIR,
-                               'third-party/Wappalyzer/src/drivers/php/js/driver.js'))
+                               'third_party/Wappalyzer/src/drivers/php/js/driver.js'))
         f3 = open(os.path.join(settings.BASE_DIR,
-                               'third-party/Wappalyzer/src/apps.json'))
+                               'third_party/Wappalyzer/src/apps.json'))
 
         self.f_wappalyzer = f1.read()
         f1.close()
