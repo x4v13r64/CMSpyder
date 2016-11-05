@@ -1,4 +1,6 @@
-from .base import *
+import os
+
+from .base import INSTALLED_APPS, TIME_ZONE
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -15,7 +17,7 @@ THIRD_PARTY_PROD_APPS = [
 ]
 LOCAL_PROD_APPS = [
 ]
-INSTALLED_APPS = INSTALLED_APPS + DJANGO_PROD_APPS + THIRD_PARTY_PROD_APPS + LOCAL_PROD_APPS
+INSTALLED_APPS += DJANGO_PROD_APPS + THIRD_PARTY_PROD_APPS + LOCAL_PROD_APPS
 
 # Database
 DATABASES = {

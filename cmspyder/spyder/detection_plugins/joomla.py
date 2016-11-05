@@ -11,8 +11,7 @@ class JoomlaPlugin(BasePlugin):
         self.paths = ['/']
 
     def detect(self, subdomain, requests_results):
-        if '/' in requests_results:
-            if self._is_joomla(requests_results['/']):
+        if '/' in requests_results and self._is_joomla(requests_results['/']):
                 ScanResult.objects.create(subdomain=subdomain,
                                           type="joomla")
 
