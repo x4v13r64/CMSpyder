@@ -11,3 +11,4 @@ dnspython
 isort
 tldextract
 fake-useragent
+lxml
