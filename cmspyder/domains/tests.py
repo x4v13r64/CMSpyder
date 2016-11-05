@@ -5,6 +5,7 @@ from domains.models import *
 
 
 class UtilsTestCase(TestCase):
+
     def setUp(self):
         pass
 
