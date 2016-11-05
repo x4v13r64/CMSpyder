@@ -51,4 +51,3 @@ class DetectCMSTestCase(TestCase):
 
         self.assertEqual(subdomain_count+1, Subdomain.objects.count())
         self.assertEqual(ip_count+1, IP.objects.count())
-
