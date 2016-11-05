@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import with_statement
-from __future__ import print_function
+
+
 
 import sys, os, re
 import logging
@@ -14,22 +14,22 @@ if is_py3k:
 
     from io import StringIO
 
-    unicode = str
+    str = str
     raw_input = input
 else:
-    import thread
+    import _thread
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 try:
     import json
 except ImportError:
     import simplejson as json
 
-import _PyV8
+from . import _PyV8
 
 __author__ = 'Flier Lu <flier.lu@gmail.com>'
 __version__ = '1.0'
@@ -38,7 +38,7 @@ __all__ = ["ReadOnly", "DontEnum", "DontDelete", "Internal",
            "JSError", "JSObject", "JSArray", "JSFunction",
            "JSClass", "JSEngine", "JSContext",
            "JSObjectSpace", "JSAllocationAction",
-           "JSStackTrace", "JSStackFrame", "profiler", 
+           "JSStackTrace", "JSStackFrame", "profiler",
            "JSExtension", "JSLocker", "JSUnlocker", "AST"]
 
 class JSAttribute(object):
@@ -47,7 +47,7 @@ class JSAttribute(object):
 
     def __call__(self, func):
         setattr(func, "__%s__" % self.name, True)
-        
+
         return func
 
 ReadOnly = JSAttribute(name='readonly')
@@ -65,7 +65,7 @@ class JSError(Exception):
         return str(self._impl)
 
     def __unicode__(self, *args, **kwargs):
-        return unicode(self._impl)
+        return str(self._impl)
 
     def __getattribute__(self, attr):
         impl = super(JSError, self).__getattribute__("_impl")
@@ -307,7 +307,7 @@ class JSDebugProtocol(object):
         EVENT = 'event'
 
         def __init__(self, payload):
-            self.data = json.loads(payload) if type(payload) in [str, unicode] else payload
+            self.data = json.loads(payload) if type(payload) in [str, str] else payload
 
         @property
         def seq(self):
@@ -373,7 +373,7 @@ class JSDebugProtocol(object):
         obj = json.loads(payload)
 
         return JSDebugProtocol.Event(obj) if obj['type'] == 'event' else JSDebugProtocol.Response(obj)
-    
+
 class JSDebugEvent(_PyV8.JSDebugEvent):
     class FrameData(object):
         def __init__(self, frame, count, name, value):
@@ -747,7 +747,7 @@ JSAllocationAction = _PyV8.JSAllocationAction
 class JSEngine(_PyV8.JSEngine):
     def __init__(self):
         _PyV8.JSEngine.__init__(self)
-        
+
     def __enter__(self):
         return self
 
@@ -876,10 +876,10 @@ if is_py3k:
         return s
 else:
     def toNativeString(s, encoding='utf-8'):
-        return s.encode(encoding) if isinstance(s, unicode) else s
+        return s.encode(encoding) if isinstance(s, str) else s
 
     def toUnicodeString(s, encoding='utf-8'):
-        return s if isinstance(s, unicode) else unicode(s, encoding)
+        return s if isinstance(s, str) else str(s, encoding)
 
 class TestContext(unittest.TestCase):
     def testMultiNamespace(self):
@@ -1067,7 +1067,7 @@ class TestWrapper(unittest.TestCase):
         class MyString(str, JSClass):
             pass
 
-        class MyUnicode(unicode, JSClass):
+        class MyUnicode(str, JSClass):
             pass
 
         class MyDateTime(time, JSClass):
@@ -1078,7 +1078,7 @@ class TestWrapper(unittest.TestCase):
             var_int = 1
             var_float = 1.0
             var_str = 'str'
-            var_unicode = u'unicode'
+            var_unicode = 'unicode'
             var_datetime = datetime.now()
             var_date = date.today()
             var_time = time()
@@ -1134,7 +1134,7 @@ class TestWrapper(unittest.TestCase):
             self.assertEqual('number', typeof(123))
             self.assertEqual('number', typeof(3.14))
             self.assertEqual('string', typeof('test'))
-            self.assertEqual('string', typeof(u'test'))
+            self.assertEqual('string', typeof('test'))
 
             self.assertEqual('[object Date]', protoof(datetime.now()))
             self.assertEqual('[object Date]', protoof(date.today()))
@@ -1174,7 +1174,7 @@ class TestWrapper(unittest.TestCase):
             self.assertEqual(14, func.colnum)
             self.assertEqual(0, func.lineoff)
             self.assertEqual(0, func.coloff)
-            
+
             #TODO fix me, why the setter doesn't work?
             # func.name = "hello"
             # it seems __setattr__ was called instead of CJavascriptFunction::SetName
@@ -1483,7 +1483,7 @@ class TestWrapper(unittest.TestCase):
             self.assertEqual(2, ctxt.eval("(function (arr, idx) { return arr[idx]; })")(JSArray([1, 2, 3]), 1))
             self.assertEqual('[object Array]', ctxt.eval("(function (arr) { return Object.prototype.toString.call(arr); })")(JSArray([1, 2, 3])))
             self.assertEqual('[object Array]', ctxt.eval("(function (arr) { return Object.prototype.toString.call(arr); })")(JSArray((1, 2, 3))))
-            self.assertEqual('[object Array]', ctxt.eval("(function (arr) { return Object.prototype.toString.call(arr); })")(JSArray(range(3))))
+            self.assertEqual('[object Array]', ctxt.eval("(function (arr) { return Object.prototype.toString.call(arr); })")(JSArray(list(range(3)))))
 
             [x for x in JSArray([1,2,3])]
 
@@ -1586,12 +1586,12 @@ class TestWrapper(unittest.TestCase):
 
     def testUnicode(self):
         with JSContext() as ctxt:
-            self.assertEqual(u"人", toUnicodeString(ctxt.eval(u"\"人\"")))
-            self.assertEqual(u"é", toUnicodeString(ctxt.eval(u"\"é\"")))
+            self.assertEqual("人", toUnicodeString(ctxt.eval("\"人\"")))
+            self.assertEqual("é", toUnicodeString(ctxt.eval("\"é\"")))
 
             func = ctxt.eval("(function (msg) { return msg.length; })")
 
-            self.assertEqual(2, func(u"测试"))
+            self.assertEqual(2, func("测试"))
 
     def testClassicStyleObject(self):
         class FileSystemWarpper:
@@ -2001,10 +2001,10 @@ class TestEngine(unittest.TestCase):
 
     def testUnicodeSource(self):
         class Global(JSClass):
-            var = u'测试'
+            var = '测试'
 
             def __getattr__(self, name):
-                if (name if is_py3k else name.decode('utf-8')) == u'变量':
+                if (name if is_py3k else name.decode('utf-8')) == '变量':
                     return self.var
 
                 return JSClass.__getattr__(self, name)
@@ -2013,7 +2013,7 @@ class TestEngine(unittest.TestCase):
 
         with JSContext(g) as ctxt:
             with JSEngine() as engine:
-                src = u"""
+                src = """
                 function 函数() { return 变量.length; }
 
                 函数();
@@ -2033,7 +2033,7 @@ class TestEngine(unittest.TestCase):
                 self.assertEqual(toNativeString(src), s.source)
                 self.assertEqual(2, s.run())
 
-                func_name = toNativeString(u'函数')
+                func_name = toNativeString('函数')
 
                 self.assertTrue(hasattr(ctxt.locals, func_name))
 
@@ -2047,9 +2047,9 @@ class TestEngine(unittest.TestCase):
                 self.assertEqual(0, func.lineoff)
                 self.assertEqual(0, func.coloff)
 
-                var_name = toNativeString(u'变量')
+                var_name = toNativeString('变量')
 
-                setattr(ctxt.locals, var_name, u'测试长字符串')
+                setattr(ctxt.locals, var_name, '测试长字符串')
 
                 self.assertEqual(6, func())
 
@@ -2087,8 +2087,8 @@ class TestEngine(unittest.TestCase):
         with JSContext() as ctxt:
             self.assertRaises(ReferenceError, ctxt.eval, "hello('flier')")
 
-        extUnicodeSrc = u"""function helloW(name) { return "hello " + name + " from javascript"; }"""
-        extUnicodeJs = JSExtension(u"helloW/javascript", extUnicodeSrc)
+        extUnicodeSrc = """function helloW(name) { return "hello " + name + " from javascript"; }"""
+        extUnicodeJs = JSExtension("helloW/javascript", extUnicodeSrc)
 
         self.assertTrue(extUnicodeJs)
         self.assertEqual("helloW/javascript", extUnicodeJs.name)
@@ -2101,9 +2101,9 @@ class TestEngine(unittest.TestCase):
         with JSContext(extensions=['helloW/javascript']) as ctxt:
             self.assertEqual("hello flier from javascript", ctxt.eval("helloW('flier')"))
 
-            ret = ctxt.eval(u"helloW('世界')")
+            ret = ctxt.eval("helloW('世界')")
 
-            self.assertEqual(u"hello 世界 from javascript", ret if is_py3k else ret.decode('UTF-8'))
+            self.assertEqual("hello 世界 from javascript", ret if is_py3k else ret.decode('UTF-8'))
 
     def testNativeExtension(self):
         extSrc = "native function hello();"
@@ -2374,18 +2374,18 @@ class TestAST(unittest.TestCase):
 . . . LITERAL "j"
 . . . LITERAL 0
 """, checker.ast)
-            self.assertEqual([u'FunctionLiteral', {u'name': u''},
-                [u'Declaration', {u'mode': u'VAR'},
-                    [u'Variable', {u'name': u'i'}]
-                ], [u'Declaration', {u'mode':u'VAR'},
-                    [u'Variable', {u'name': u'j'}]
-                ], [u'Block',
-                    [u'ExpressionStatement', [u'CallRuntime', {u'name': u'InitializeVarGlobal'},
-                        [u'Literal', {u'handle':u'i'}],
-                        [u'Literal', {u'handle': 0}]]],
-                    [u'ExpressionStatement', [u'CallRuntime', {u'name': u'InitializeVarGlobal'},
-                        [u'Literal', {u'handle': u'j'}],
-                        [u'Literal', {u'handle': 0}]]]
+            self.assertEqual(['FunctionLiteral', {'name': ''},
+                ['Declaration', {'mode': 'VAR'},
+                    ['Variable', {'name': 'i'}]
+                ], ['Declaration', {'mode':'VAR'},
+                    ['Variable', {'name': 'j'}]
+                ], ['Block',
+                    ['ExpressionStatement', ['CallRuntime', {'name': 'InitializeVarGlobal'},
+                        ['Literal', {'handle':'i'}],
+                        ['Literal', {'handle': 0}]]],
+                    ['ExpressionStatement', ['CallRuntime', {'name': 'InitializeVarGlobal'},
+                        ['Literal', {'handle': 'j'}],
+                        ['Literal', {'handle': 0}]]]
                 ]
             ], checker.json)
 
@@ -2741,7 +2741,7 @@ if __name__ == '__main__':
     if "-p" in sys.argv:
         sys.argv.remove("-p")
         print("Press any key to continue or attach process #%d..." % os.getpid())
-        raw_input()
+        input()
 
     logging.basicConfig(level=level, format='%(asctime)s %(levelname)s %(message)s')
 
