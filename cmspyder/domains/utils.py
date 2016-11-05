@@ -7,6 +7,13 @@ from models import TLD, Domain, Subdomain, IP
 
 
 def extract_subdomain(url):
+    """
+    Receives a url and returns an object created by tldextract.
+    If there is no proper tldextract subdomain object, returns None.
+    If there is an IP, saves it.
+    :param url:
+    :return:
+    """
     extract_result = tldextract.extract(url.lower())
     # make sure we have a valid domain and TLD
     if extract_result.domain and extract_result.suffix:
@@ -23,6 +30,13 @@ def extract_subdomain(url):
 
 
 def import_subdomain(url, discovered_by=None):
+    """
+    Receives a url and saves the TLD/domain/subdomain.
+    If the subdomain isn't empty, also tries to save with an empty subdomain.
+    :param url:
+    :param discovered_by: the subdomain that pointed to the url
+    :return:
+    """
     extract_result = extract_subdomain(url.lower())
     if extract_result:
         new_tld = TLD.objects.get_or_create(tld=extract_result.suffix)
@@ -42,7 +56,7 @@ def import_subdomain(url, discovered_by=None):
 
 def get_ip(domain):
     """
-    This method returns the first IP address string that responds as the given domain name
+    Returns the first IP address string that responds as the given domain name.
     """
     try:
         return socket.gethostbyname(domain)
@@ -52,8 +66,8 @@ def get_ip(domain):
 
 def get_ip_ex(domain):
     """
-    This method returns an array containing one or more IP address strings that respond as the
-    given domain name
+    Returns an array containing one or more IP address strings that respond as the
+    given domain name.
     """
     try:
         return socket.gethostbyname_ex(domain)[2]
@@ -63,7 +77,7 @@ def get_ip_ex(domain):
 
 def get_host(ip):
     """
-    This method returns the 'True Host' name for a given IP address
+    Returns the 'True Host' name for a given IP address.
     """
     try:
         return socket.gethostbyaddr(ip)[0]
@@ -73,7 +87,7 @@ def get_host(ip):
 
 def get_alias(domain):
     """
-    This method returns an array containing a list of aliases for the given domain
+    Returns an array containing a list of aliases for the given domain.
     """
     try:
         return socket.gethostbyname_ex(domain)[1]
