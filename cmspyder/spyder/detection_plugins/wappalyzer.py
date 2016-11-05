@@ -14,12 +14,12 @@ class WappalyzerPlugin(BasePlugin):
     def detect(self, subdomain, requests_results):
         if '/' in requests_results:
             results = self.wappalyzer_driver.analyze('http://%s/' % subdomain,  # TODO fix this?
-                                                     requests_results['/'].text,
-                                                     dict(requests_results['/'].headers))
+                                                     dict(requests_results['/'].headers),
+                                                     requests_results['/'].text)
 
             for r in results:
                 if 'CMS' in results[r]['categories']:
                     ScanResult.objects.create(subdomain=subdomain,
                                               type=r.lower(),
-                                              version=results[r]['version'] if
-                                              results[r]['version'] else '')
+                                              version=results[r]['version'] if 'version' in
+                                              results[r] else '')

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-
 import sys, os, re
 import logging
 import collections
@@ -29,7 +27,7 @@ try:
 except ImportError:
     import simplejson as json
 
-from . import _PyV8
+import third_party.PyV8_binaries._PyV8 as _PyV8
 
 __author__ = 'Flier Lu <flier.lu@gmail.com>'
 __version__ = '1.0'
