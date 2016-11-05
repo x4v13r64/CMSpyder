@@ -44,8 +44,8 @@ class DetectCMSTestCase(TestCase):
         discover_domains(Subdomain.objects.order_by('?').first().id,
                          "<html>"
                          "test1.com"
-                         "<a href=http://test2.com>"
-                         "<a href=192.168.0.1>"
+                         "<a href=http://test2.com></a>"
+                         "<a href=192.168.0.1></a>"
                          "http://192.168.0.2/test"
                          "</html>")
 
