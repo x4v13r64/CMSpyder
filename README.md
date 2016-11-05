@@ -42,6 +42,6 @@ Distributed www crawler/scrapper with:
 - Start the RabbitMQ server
 `$ rabbitmq-server`
 - Start the worker process
-`$ DJANGO_SETTINGS_MODULE='cmspyder.settings.prod' celery -A cmspyder worker --concurrency=50 --pool=eventlet  --without-gossip -Q cmspyder_detect_cms_queue, cmspyder_discover_domains_queue`
+`$ DJANGO_SETTINGS_MODULE='cmspyder.settings.dev' celery -A cmspyder worker --concurrency=50 --pool=eventlet -Q cmspyder_detect_cms_queue, cmspyder_discover_domains_queue`
 - Start django
-`$ python manage.py runserver 0.0.0.0:80 --settings=cmspyder.settings.dev --insecure`
+`$ python manage.py runserver 0.0.0.0:8080 --settings=cmspyder.settings.dev`
