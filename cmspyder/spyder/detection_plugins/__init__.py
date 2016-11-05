@@ -1,7 +1,7 @@
-from wordpress import WordPressPlugin
-from drupal import DrupalPlugin
-from joomla import JoomlaPlugin
-from wappalyzer import WappalyzerPlugin
+from spyder.detection_plugins.wordpress import WordPressPlugin
+from spyder.detection_plugins.drupal import DrupalPlugin
+from spyder.detection_plugins.joomla import JoomlaPlugin
+from spyder.detection_plugins.wappalyzer import WappalyzerPlugin
 
 detection_classes = [WordPressPlugin, DrupalPlugin, JoomlaPlugin, WappalyzerPlugin]
 

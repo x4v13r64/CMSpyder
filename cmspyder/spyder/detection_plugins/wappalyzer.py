@@ -1,4 +1,4 @@
-from base import BasePlugin
+from spyder.detection_plugins.base import BasePlugin
 from spyder.drivers.wappalyzer import WappalyzerDriver
 from spyder.models import ScanResult
 

@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-from base import BasePlugin
+from spyder.detection_plugins.base import BasePlugin
 from spyder.models import ScanResult
 
 
@@ -30,7 +30,7 @@ class WordPressPlugin(BasePlugin):
                 if 'wp-content' in css_tag['href'] or 'wp-include' in css_tag['href']:
                     return True
             # Some tags don't have `href`
-            except Exception, e:
+            except Exception as e:
                 pass
 
         script_tags = soup.find_all('script')
@@ -39,7 +39,7 @@ class WordPressPlugin(BasePlugin):
                 if 'wp-content' in script_tag['src'] or 'wp-include' in script_tag['src']:
                     return True
             # Some tags don't have `src`
-            except Exception, e:
+            except Exception as e:
                 pass
 
         return False

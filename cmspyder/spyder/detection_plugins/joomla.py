@@ -1,6 +1,6 @@
 import re
 
-from base import BasePlugin
+from spyder.detection_plugins.base import BasePlugin
 from spyder.models import ScanResult
 
 
