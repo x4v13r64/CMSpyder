@@ -4,10 +4,18 @@ from .base import *
 DEBUG = False
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# TODO move to env
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 ALLOWED_HOSTS = ['*']
+
+# Application definition
+DJANGO_PROD_APPS = [
+]
+THIRD_PARTY_PROD_APPS = [
+]
+LOCAL_PROD_APPS = [
+]
+INSTALLED_APPS = INSTALLED_APPS + DJANGO_PROD_APPS + THIRD_PARTY_PROD_APPS + LOCAL_PROD_APPS
 
 # Database
 DATABASES = {

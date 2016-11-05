@@ -13,7 +13,6 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 THIRD_PARTY_APPS = [
-    'debug_toolbar',  # todo: not in prod
     'kombu.transport.django',
 ]
 LOCAL_APPS = [

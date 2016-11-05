@@ -8,9 +8,19 @@ SECRET_KEY = '@-94qf(l2pj7yn7c@$%77vp=jkon#p^@%+_eac&x&o@835(v*q'
 
 ALLOWED_HOSTS = []
 
+# Application definition
+DJANGO_DEV_APPS = [
+]
+THIRD_PARTY_DEV_APPS = [
+    # 'debug_toolbar',
+]
+LOCAL_DEV_APPS = [
+]
+INSTALLED_APPS = INSTALLED_APPS + DJANGO_DEV_APPS + THIRD_PARTY_DEV_APPS + LOCAL_DEV_APPS
+
 # Application middleware
 MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+   # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 DEBUG_TOOLBAR_CONFIG = {
