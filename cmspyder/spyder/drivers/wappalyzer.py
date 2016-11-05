@@ -1,8 +1,8 @@
 import ast
 import json
 import os
-import third_party.PyV8_binaries.PyV8 as PyV8
 import third_party.PyV8_binaries._PyV8 as _PyV8
+import third_party.PyV8_binaries.PyV8 as PyV8
 from urlparse import urlparse
 
 from django.conf import settings
