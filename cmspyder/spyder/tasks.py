@@ -26,7 +26,7 @@ def discover_domains(subdomain_id, request_result_text):
     extracted_subdomain = []
 
     for link in BeautifulSoup(request_result_text,
-                              'lxml',
+                              'html.parser',  # todo use lxml to speed things up
                               parseOnlyThese=SoupStrainer('a')):
         # todo this only saves 'href' attributes in 'a' elements, can be missing valid entries
         if link.has_attr('href'):
