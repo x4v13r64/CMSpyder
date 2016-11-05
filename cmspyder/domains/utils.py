@@ -22,17 +22,19 @@ def extract_subdomain(url):
         return None
 
 
-def import_subdomain(url):
-    extract_result = extract_subdomain(url)
+def import_subdomain(url, discovered_by=None):
+    extract_result = extract_subdomain(url.lower())
     if extract_result:
         new_tld = TLD.objects.get_or_create(tld=extract_result.suffix)
         new_domain = Domain.objects.get_or_create(tld=new_tld[0],
                                                   domain=extract_result.domain)
         new_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
-                                                        subdomain=extract_result.subdomain)
+                                                        subdomain=extract_result.subdomain,
+                                                        discovered_by=discovered_by)
         # also create with empty subdomain
         new_empty_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
-                                                              subdomain="")
+                                                              subdomain="",
+                                                              discovered_by=discovered_by)
         return new_subdomain[0]
     else:
         return None

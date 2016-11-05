@@ -14,10 +14,13 @@ from utils import create_logger
 @shared_task
 def discover_domains(subdomain_id, request_result_text):
 
-    # Create and start logger
-    logger = create_logger('discover_{0}.log'.format(subdomain_id))
+    # retrieve subdomain object
+    subdomain = Subdomain.objects.get(id=subdomain_id)
 
-    logger.info('discover {0} START'.format(subdomain_id))
+    # Create and start logger
+    logger = create_logger('discover_{0}.log'.format(subdomain.id))
+
+    logger.info('discover {0} START'.format(subdomain.id))
 
     # keep list or extracted subdomains to limit db queries
     extracted_subdomain = []
@@ -28,7 +31,8 @@ def discover_domains(subdomain_id, request_result_text):
             extract_result = extract_subdomain(href)
             if extract_result not in extracted_subdomain:
                 extracted_subdomain.append(extract_result)
-                new_subdomain = import_subdomain(href)
+                new_subdomain = import_subdomain(href,
+                                                 discovered_by=subdomain)
                 logger.info('discover found {0}'.format(new_subdomain))
 
     logger.info('discover {0} DONE'.format(subdomain_id))
