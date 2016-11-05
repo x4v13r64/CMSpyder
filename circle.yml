@@ -9,6 +9,7 @@ dependencies:
     pre:
         - easy_install -U setuptools
         - pip install -r ../requirements.txt
+        - pip install codecov
 
 test:
     override:
@@ -16,4 +17,4 @@ test:
         - python manage.py test domains.tests --settings=cmspyder.settings.dev
         - python manage.py test spyder.tests --settings=cmspyder.settings.dev
     post:
-        - bash <(curl -s https://codecov.io/bash) -p $BUILD_DIR/
+        - codecov
