@@ -25,6 +25,7 @@ class SubdomainAdmin(admin.ModelAdmin):
     list_filter = ['domain__tld']
     search_fields = ['subdomain', 'domain__domain']
     readonly_fields = ['domain', 'subdomain', 'last_scan', 'last_ip', 'discovered_by']
+    actions = ['detect_cms']
 
     def get_domain_tld(self, obj):
         return obj.domain.tld
@@ -36,11 +37,9 @@ class SubdomainAdmin(admin.ModelAdmin):
     get_domain_domain.short_description = 'Domain'
     get_domain_domain.admin_order_field = 'domain__domain'
 
-    actions = ['detect_cms']
     def detect_cms(self, request, queryset):
         for subdomain in queryset:
             detect_cms.delay(subdomain.id)
-            # detect_cms(subdomain.id)
         self.message_user(request, 'Task(s) created')
     detect_cms.short_description = 'Detect CMS'
 admin.site.register(Subdomain, SubdomainAdmin)
