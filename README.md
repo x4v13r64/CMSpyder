@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/j4v/CMSpyder/branch/master/graph/badge.svg)](https://codecov.io/gh/j4v/CMSpyder)
 
 # Project
-Distributed web crawler/scrapper with:
+Distributed www crawler/scrapper with:
 - CMS detection
     - Plugin-based architecture
     - Version and plugin detection
