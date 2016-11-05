@@ -8,9 +8,7 @@ from domains.models import *
 
 class UtilsTestCase(TestCase):
     def setUp(self):
-        a=1
-        # Animal.objects.create(name="lion", sound="roar")
-        # Animal.objects.create(name="cat", sound="meow")
+        pass
 
     def test_extract_subdomain(self):
 
