@@ -1,9 +1,9 @@
+import re
 import socket
 
 import tldextract
-import re
 
-from models import TLD, Domain, Subdomain, IP
+from models import IP, TLD, Domain, Subdomain
 
 
 def extract_subdomain(url):

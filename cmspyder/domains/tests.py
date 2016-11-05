@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from domains.utils import *
 from domains.models import *
+from domains.utils import *
 
 
 class UtilsTestCase(TestCase):

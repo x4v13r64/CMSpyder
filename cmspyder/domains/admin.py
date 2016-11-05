@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models import TLD, Domain, Subdomain, IP
+from models import IP, TLD, Domain, Subdomain
 from spyder.tasks import detect_cms
 
 
