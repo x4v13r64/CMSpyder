@@ -1,6 +1,6 @@
 import os
 
-from .base import INSTALLED_APPS, TIME_ZONE
+from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
