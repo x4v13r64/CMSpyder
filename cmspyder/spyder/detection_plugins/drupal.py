@@ -12,8 +12,8 @@ class DrupalPlugin(BasePlugin):
 
     def detect(self, subdomain, requests_results):
         if '/' in requests_results and self._is_drupal(requests_results['/']):
-                ScanResult.objects.create(subdomain=subdomain,
-                                          type="drupal")
+            ScanResult.objects.create(subdomain=subdomain,
+                                      type="drupal")
 
     def _is_drupal(self, request):
 
