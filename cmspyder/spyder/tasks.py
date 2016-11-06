@@ -4,9 +4,9 @@ from celery import shared_task
 from django.utils import timezone
 from fake_useragent import UserAgent
 
-from spyder.detection_plugins import get_detection_plugins
 from domains.models import Subdomain
 from domains.utils import extract_subdomain, get_ip, import_subdomain
+from spyder.detection_plugins import get_detection_plugins
 from spyder.models import ScanError
 from spyder.utils import create_logger
 

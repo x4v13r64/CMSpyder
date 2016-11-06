@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from domains.models import Subdomain, Domain, TLD, IP
-from spyder.models import ScanResult, ScanError
-from spyder.tasks import discover_domains, detect_cms
+from domains.models import IP, TLD, Domain, Subdomain
+from spyder.models import ScanError, ScanResult
+from spyder.tasks import detect_cms, discover_domains
 
 
 class DetectCMSTestCase(TestCase):
