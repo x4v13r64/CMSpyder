@@ -13,5 +13,4 @@ isort
 tldextract
 fake-useragent
 lxml
-coverage
-django-nose
+unittest-xml-reporting
