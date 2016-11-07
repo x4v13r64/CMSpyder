@@ -9,60 +9,9 @@ from bs4 import BeautifulSoup
 
 from django.conf import settings
 
+__credit__ = "https://github.com/scrapinghub/wappalyzer-python"
+
 class WappalyzerDriver(object):
-
-    def __init__(self):
-
-        f1 = open(os.path.join(settings.BASE_DIR,
-                               'third_party/Wappalyzer/src/wappalyzer.js'))
-        f2 = open(os.path.join(settings.BASE_DIR,
-                               'third_party/Wappalyzer/src/drivers/php/js/driver.js'))
-        f3 = open(os.path.join(settings.BASE_DIR,
-                               'third_party/Wappalyzer/src/apps.json'))
-
-        self.f_wappalyzer = f1.read()
-        f1.close()
-        self.f_driver = f2.read()
-        f2.close()
-        data = json.loads(f3.read())
-        f3.close()
-
-        self.apps = json.dumps(data['apps'])
-        self.categories = json.dumps(data['categories'])
-
-    def analyze(self, url, html, headers):
-
-        host = urlparse(url).hostname
-
-        data = {'host': host, 'url': url, 'html': html, 'headers': headers}
-
-        with PyV8.JSLocker():
-
-            context = PyV8.JSContext()
-
-            context.enter()
-
-            context.eval(self.f_wappalyzer)
-            context.eval(self.f_driver)
-
-            result = context.eval(
-                "w.apps = %s; w.categories = %s; w.driver.data = %s; w.driver.init();"
-                % (self.apps,
-                   self.categories,
-                   json.dumps(data)))
-
-            result_dict = ast.literal_eval(result)
-
-            context.leave()
-
-        return result_dict
-
-# ---------------------------------------------------------------------------------------
-
-__credit__ = "https://github.com/nemurici/python3-wappalyzer"
-
-
-class WappalyzerNativeDriver(object):
     """
     Python Wappalyzer driver.
     """
@@ -138,12 +87,8 @@ class WappalyzerNativeDriver(object):
         try:
             return re.compile(regex, re.I)
         except re.error as e:
-            warnings.warn(
-                "Caught '{error}' compiling regex: {regex}"
-                .format(error=e, regex=regex)
-            )
-            # regex that never matches:
-            # http://stackoverflow.com/a/1845097/413622
+            warnings.warn("Caught '{error}' compiling regex: {regex}".format(error=e, regex=regex))
+            # regex that never matches: http://stackoverflow.com/a/1845097/413622
             return re.compile(r'(?!x)x')
 
     def _has_app(self, app, url, headers, html, scripts, meta):
@@ -161,22 +106,28 @@ class WappalyzerNativeDriver(object):
         # Search the easiest things first and save the full-text search of the HTML for last
         for regex in app['url']:
             if regex.search(url):
+                a = regex.search(url).group(0)
                 return True
+
         for name, regex in app['headers'].items():
             if name in headers:
                 content = headers[name]
                 if regex.search(content):
+                    a = regex.search(content).group(0)
                     return True
 
         for regex in app['script']:
             for script in scripts:
                 if regex.search(script):
+                    a = regex.search(script).group(0)
                     return True
 
         for name, regex in app['meta'].items():
             if name in meta:
                 content = meta[name]
                 if regex.search(content):
+                    a = regex.search(content).group(0)
+                    a = regex.search(content).group(1)
                     return True
 
         for regex in app['html']:
