@@ -39,10 +39,10 @@ DATABASES = {
     }
 }
 
-TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
-TEST_OUTPUT_DIR = os.path.dirname(BASE_DIR)
-TEST_OUTPUT_VERBOSE = True
-TEST_OUTPUT_DESCRIPTIONS = True
+# TEST_RUNNER = 'xmlrunner.extra.djangotestrunner.XMLTestRunner'
+# TEST_OUTPUT_DIR = os.path.dirname(BASE_DIR)
+# TEST_OUTPUT_VERBOSE = True
+# TEST_OUTPUT_DESCRIPTIONS = True
 
 # celery config
 BROKER_URL = 'django://'
