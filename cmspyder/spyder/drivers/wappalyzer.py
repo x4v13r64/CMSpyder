@@ -1,6 +1,3 @@
-import ast
-import third_party.PyV8_binaries.PyV8 as PyV8
-from urllib.parse import urlparse
 import json
 import re
 import warnings
