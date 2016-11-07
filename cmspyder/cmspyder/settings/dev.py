@@ -14,6 +14,7 @@ ALLOWED_HOSTS = []
 DJANGO_DEV_APPS = [
 ]
 THIRD_PARTY_DEV_APPS = [
+    'django_nose',
     # 'debug_toolbar',
 ]
 LOCAL_DEV_APPS = [
@@ -37,6 +38,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # celery config
 BROKER_URL = 'django://'
