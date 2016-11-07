@@ -2,6 +2,11 @@ machine:
     python:
         version: 3.5.2
 
+checkout:
+  post:
+    - git submodule sync
+    - git submodule update --init
+
 general:
     build_dir: cmspyder
 
