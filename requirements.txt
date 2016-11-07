@@ -13,3 +13,4 @@ isort
 tldextract
 fake-useragent
 lxml
+coverage
