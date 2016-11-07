@@ -22,4 +22,5 @@ test:
         - python manage.py test domains.tests --settings=cmspyder.settings.dev
         - python manage.py test spyder.tests --settings=cmspyder.settings.dev
     post:
-        - codecov --root $BUILD_DIR/
+        - codecov
+#        - codecov --root $BUILD_DIR/
