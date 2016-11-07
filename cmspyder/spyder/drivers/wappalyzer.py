@@ -1,9 +1,9 @@
 import json
+import os
 import re
 import warnings
-import os
-from bs4 import BeautifulSoup
 
+from bs4 import BeautifulSoup
 from django.conf import settings
 
 __credit__ = "https://github.com/scrapinghub/wappalyzer-python"
