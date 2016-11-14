@@ -31,10 +31,9 @@ class Command(BaseCommand):
 
             index.write('<h2>General results</h2>\n')
             index.write('<ul>')
-            index.write('<li>Domain count: %s</li>\n' % Subdomain.objects.count())
+            index.write('<li>Domain count: {0!s}</li>\n'.format(Subdomain.objects.count()))
 
-            index.write('<li>Domains analyzed: %s (%s%% of all domains)</li>\n' %
-                        (Subdomain.objects.exclude(last_ip__isnull=True).count(),
+            index.write('<li>Domains analyzed: {0!s} ({1!s}% of all domains)</li>\n'.format(Subdomain.objects.exclude(last_ip__isnull=True).count(),
                          Subdomain.objects.exclude(last_ip__isnull=True).count() *
                          100/Subdomain.objects.count()))
             index.write('<li>Domains fingerprinted: %s (%s%% of all domains & %s%% of '
@@ -51,12 +50,11 @@ class Command(BaseCommand):
             for result_type in \
                     ScanResult.objects.filter().values('type').distinct().order_by('type'):
                 index.write('<div>\n')
-                index.write('<h3>%s</h3>\n' % result_type['type'])
+                index.write('<h3>{0!s}</h3>\n'.format(result_type['type']))
 
                 scan_results_for_type = ScanResult.objects.filter(type=result_type['type'])
 
-                index.write('<p>total count: %s (%s%% of CMS detections)</p>\n' %
-                            (ScanResult.objects.filter(type=result_type['type']).
+                index.write('<p>total count: {0!s} ({1!s}% of CMS detections)</p>\n'.format(ScanResult.objects.filter(type=result_type['type']).
                              values('subdomain').distinct().count(),
                              ScanResult.objects.filter(type=result_type['type']).
                              values('subdomain').distinct().count() *
@@ -82,8 +80,8 @@ class Command(BaseCommand):
                 index.write('</div>\n')
             index.write('</div>\n')
 
-            index.write('&lt;generated %s&gt;\n' % timezone.now().
-                        strftime("%Y-%m-%d %H:%M"))
+            index.write('&lt;generated {0!s}&gt;\n'.format(timezone.now().
+                        strftime("%Y-%m-%d %H:%M")))
 
             index.write('<script>\n')
             index.write('$(\'.list > div h3\').click(function() {\n')
