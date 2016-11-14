@@ -22,7 +22,7 @@ LOCAL_DEV_APPS = [
 INSTALLED_APPS += DJANGO_DEV_APPS + THIRD_PARTY_DEV_APPS + LOCAL_DEV_APPS
 
 # Application middleware
-MIDDLEWARE_CLASSES = MIDDLEWARE_CLASSES + [
+MIDDLEWARE_CLASSES += [
    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 

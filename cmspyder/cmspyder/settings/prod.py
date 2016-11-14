@@ -32,10 +32,10 @@ DATABASES = {
 }
 
 # celery config
-BROKER_URL = 'amqp://%s:%s@%s:%s//' % (os.environ['RABBIT_MQ_USER'],
-                                       os.environ['RABBIT_MQ_PASSWORD'],
-                                       os.environ['RABBIT_MQ_HOST'],
-                                       os.environ['RABBIT_MQ_PORT'],)
+BROKER_URL = 'amqp://{0}:{1}@{2}:{3}//'.format(os.environ['RABBIT_MQ_USER'],
+                                               os.environ['RABBIT_MQ_PASSWORD'],
+                                               os.environ['RABBIT_MQ_HOST'],
+                                               os.environ['RABBIT_MQ_PORT'],)
 
 CELERY_DEFAULT_QUEUE = 'celery_default_queue'
 CMSPYDER_DISCOVER_DOMAINS_QUEUE = 'cmspyder_discover_domains_queue'

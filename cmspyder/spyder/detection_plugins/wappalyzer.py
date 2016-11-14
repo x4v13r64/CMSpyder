@@ -13,7 +13,7 @@ class WappalyzerPlugin(BasePlugin):
 
     def detect(self, subdomain, requests_results):
         if '/' in requests_results:
-            results = self.wappalyzer_driver.analyze('http://%s/' % subdomain,
+            results = self.wappalyzer_driver.analyze('http://{0}/'.format(subdomain),
                                                      dict(requests_results['/'].headers),
                                                      requests_results['/'].text)
 

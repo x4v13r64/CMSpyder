@@ -81,7 +81,7 @@ def detect_cms(subdomain_id):
                     try:
                         logger.info('detect request {0} START'.format(subdomain))
                         request_results[path] = \
-                            requests.get(u"http://%s%s" % (subdomain, path),
+                            requests.get(u"http://{0}{1}".format(subdomain, path),
                                          verify=False,
                                          timeout=10,
                                          headers={

@@ -220,7 +220,7 @@ class WappalyzerDriver(object):
         """
 
         cat_nums = self.apps.get(app_name, {}).get("cats", [])
-        cat_names = [self.categories.get("%s" % cat_num, "")
+        cat_names = [self.categories.get("{0}".format(cat_num), "")
                      for cat_num in cat_nums]
 
         return cat_names

@@ -16,10 +16,10 @@ class Command(BaseCommand):
         print("Checking job count")
 
         # get the number of jobs currently running
-        conn = amqp.Connection(host='%s:%s' % (os.environ['RABBIT_MQ_HOST'],
+        conn = amqp.Connection(host='{0}:{1}'.format(os.environ['RABBIT_MQ_HOST'],
                                                os.environ['RABBIT_MQ_PORT'],),
-                               userid='%s' % os.environ['RABBIT_MQ_USER'],
-                               password='%s' % os.environ['RABBIT_MQ_PASSWORD'],
+                               userid='{0}'.format(os.environ['RABBIT_MQ_USER']),
+                               password='{0}'.format(os.environ['RABBIT_MQ_PASSWORD']),
                                virtual_host="/",
                                insist=False)
 
@@ -29,9 +29,9 @@ class Command(BaseCommand):
 
         # if under 10k jobs, send 100k jobs
         if jobs < 1000:
-            print("%s jobs: Will add 100k jobs" % jobs)
+            print("{0} jobs: Will add 100k jobs".format(jobs))
             # scan subdomains according to oldest last_scan entry
             for subdomain in Subdomain.objects.order_by('last_scan')[:100000]:
                 detect_cms.delay(subdomain.id)
         else:
-            print("%s jobs: skipping" % jobs)
+            print("{0} jobs: skipping".format(jobs))

@@ -9,7 +9,7 @@ def create_logger(domain):
         os.makedirs(settings.CRAWLER_LOGS_DIR)
     file_name = os.path.join(settings.CRAWLER_LOGS_DIR,
                              settings.CRAWLER_LOG_FILE_NAME.format(domain))
-    logger = logging.getLogger('crawler %s' % domain)
+    logger = logging.getLogger('crawler {0}'.format(domain))
     logger.setLevel(logging.DEBUG)
     # handler = logging.FileHandler(file_name)
     f = logging.Formatter(settings.CRAWLER_LOG_FORMAT)
