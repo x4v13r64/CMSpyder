@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from spyder.models import PluginResult, ScanError, ScanResult
+from spyder.models import PluginResult, ScanError, ScanResult, DiscoveryRelationship
 
 
 class ScanResultAdmin(admin.ModelAdmin):
@@ -17,3 +17,10 @@ class ScanErrorAdmin(admin.ModelAdmin):
     search_fields = ['subdomain__subdomain', 'subdomain__domain__domain']
     readonly_fields = ['subdomain', 'type', 'error']
 admin.site.register(ScanError, ScanErrorAdmin)
+
+
+class DiscoveryRelationshipAdmin(admin.ModelAdmin):
+    list_display = ['id', 'created', 'origin_subdomain', 'destination_subdomain']
+    search_fields = ['origin_subdomain__subdomain', 'destination_subdomain__subdomain']
+    readonly_fields = ['origin_subdomain', 'destination_subdomain']
+admin.site.register(DiscoveryRelationship, DiscoveryRelationshipAdmin)

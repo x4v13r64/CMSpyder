@@ -4,6 +4,7 @@ import socket
 import tldextract
 
 from domains.models import IP, TLD, Domain, Subdomain
+from spyder.models import DiscoveryRelationship
 
 
 def extract_subdomain(url):
@@ -37,18 +38,27 @@ def import_subdomain(url, discovered_by=None):
     :param discovered_by: the subdomain that pointed to the url
     :return:
     """
+
     extract_result = extract_subdomain(url.lower())
     if extract_result:
         new_tld = TLD.objects.get_or_create(tld=extract_result.suffix)
         new_domain = Domain.objects.get_or_create(tld=new_tld[0],
                                                   domain=extract_result.domain)
         new_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
-                                                        subdomain=extract_result.subdomain,
-                                                        discovered_by=discovered_by)
+                                                        subdomain=extract_result.subdomain)
+
         # also create with empty subdomain
         new_empty_subdomain = Subdomain.objects.get_or_create(domain=new_domain[0],
-                                                              subdomain="",
-                                                              discovered_by=discovered_by)
+                                                              subdomain="")
+
+        if discovered_by:
+            new_discovery_relationship = DiscoveryRelationship.objects.get_or_create(
+                origin_subdomain=discovered_by,
+                destination_subdomain=new_subdomain[0])
+            new_discovery_relationship = DiscoveryRelationship.objects.get_or_create(
+                origin_subdomain=discovered_by,
+                destination_subdomain=new_empty_subdomain[0])
+
         return new_subdomain[0]
     else:
         return None
