@@ -22,3 +22,10 @@ class ScanError(TimeStampedModel):
     subdomain = models.ForeignKey(Subdomain, related_name='error')
     type = models.CharField(max_length=250)
     error = models.TextField()
+
+
+class DiscoveryRelationship(TimeStampedModel):
+    # so that when a subdomain points to another subdomain, we can keep track of the source of
+    # the link
+    origin_subdomain = models.ForeignKey(Subdomain, related_name='origin_subdomain')
+    destination_subdomain = models.ForeignKey(Subdomain, related_name='destination_subdomain')
