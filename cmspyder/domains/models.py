@@ -51,9 +51,6 @@ class Subdomain(models.Model):
     subdomain = models.CharField(max_length=250, blank=True)
     last_scan = models.DateTimeField(auto_now_add=True)
     last_ip = models.GenericIPAddressField(null=True)
-    # so that when a subdomain points to another subdomain, we can keep track of the source of
-    # the link
-    discovered_by = models.ForeignKey('self', null=True, related_name='discovered')
 
     def __str__(self):
         if self.subdomain:
