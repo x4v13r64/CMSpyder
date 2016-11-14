@@ -11,7 +11,6 @@ class WappalyzerPlugin(BasePlugin):
         self.paths = ['/']
         self.wappalyzer_driver = WappalyzerDriver()
 
-
     def detect(self, subdomain, requests_results):
         if '/' in requests_results:
             results = self.wappalyzer_driver.analyze('http://%s/' % subdomain,
@@ -23,6 +22,7 @@ class WappalyzerPlugin(BasePlugin):
 
                     # find greatest version
                     if len(results[r]['versions']) > 1:
+                        # todo validate this is working properly
                         greatest_version = results[r]['versions'][0]
                         for v in results[r]['versions']:
                             if LooseVersion(v) > LooseVersion(greatest_version):
