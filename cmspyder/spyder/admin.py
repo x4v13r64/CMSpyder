@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from spyder.models import PluginResult, ScanError, ScanResult, DiscoveryRelationship
+from spyder.models import (DiscoveryRelationship, PluginResult, ScanError,
+                           ScanResult)
 
 
 class ScanResultAdmin(admin.ModelAdmin):

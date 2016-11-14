@@ -1,7 +1,8 @@
+from distutils.version import LooseVersion
+
 from spyder.detection_plugins.base import BasePlugin
 from spyder.drivers.wappalyzer import WappalyzerDriver
 from spyder.models import ScanResult
-from distutils.version import LooseVersion
 
 
 class WappalyzerPlugin(BasePlugin):
