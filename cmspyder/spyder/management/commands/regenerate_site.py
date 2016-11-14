@@ -33,9 +33,10 @@ class Command(BaseCommand):
             index.write('<ul>')
             index.write('<li>Domain count: {0!s}</li>\n'.format(Subdomain.objects.count()))
 
-            index.write('<li>Domains analyzed: {0!s} ({1!s}% of all domains)</li>\n'.format(Subdomain.objects.exclude(last_ip__isnull=True).count(),
-                         Subdomain.objects.exclude(last_ip__isnull=True).count() *
-                         100/Subdomain.objects.count()))
+            index.write('<li>Domains analyzed: {0!s} ({1!s}% of all domains)</li>\n'
+                        .format(Subdomain.objects.exclude(last_ip__isnull=True).count(),
+                                Subdomain.objects.exclude(last_ip__isnull=True).count() *
+                                100/Subdomain.objects.count()))
             index.write('<li>Domains fingerprinted: %s (%s%% of all domains & %s%% of '
                         'analyzed domains)</li>\n' %
                         (ScanResult.objects.values('subdomain').distinct().count(),
@@ -54,12 +55,13 @@ class Command(BaseCommand):
 
                 scan_results_for_type = ScanResult.objects.filter(type=result_type['type'])
 
-                index.write('<p>total count: {0!s} ({1!s}% of CMS detections)</p>\n'.format(ScanResult.objects.filter(type=result_type['type']).
-                             values('subdomain').distinct().count(),
-                             ScanResult.objects.filter(type=result_type['type']).
-                             values('subdomain').distinct().count() *
-                             100/ScanResult.objects.filter().
-                             values('subdomain').distinct().count()))
+                index.write('<p>total count: {0!s} ({1!s}% of CMS detections)</p>\n'
+                            .format(ScanResult.objects.filter(type=result_type['type']).
+                                    values('subdomain').distinct().count(),
+                                    ScanResult.objects.filter(type=result_type['type']).
+                                    values('subdomain').distinct().count() *
+                                    100/ScanResult.objects.filter().
+                                    values('subdomain').distinct().count()))
 
                 for version in \
                         scan_results_for_type.values('version').distinct().order_by('version'):
