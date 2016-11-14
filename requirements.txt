@@ -14,3 +14,4 @@ tldextract
 fake-useragent
 lxml
 unittest-xml-reporting
+gunicorn
