@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from domains.models import *
-from domains.utils import *
+from domains.models import Subdomain, Domain, IP
+from domains.utils import extract_subdomain, import_subdomain
 
 
 class UtilsTestCase(TestCase):
