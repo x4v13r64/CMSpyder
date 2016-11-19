@@ -15,3 +15,4 @@ fake-useragent
 lxml
 unittest-xml-reporting
 gunicorn
+django-nose
