@@ -43,5 +43,5 @@ Distributed www crawler/scrapper with:
 `$ rabbitmq-server`
 - Start the worker process
 `$ DJANGO_SETTINGS_MODULE='cmspyder.settings.dev' celery -A cmspyder worker --concurrency=50 --pool=eventlet -Q cmspyder_detect_cms_queue, cmspyder_discover_domains_queue`
-- Start django
+- Start the master process
 `$ python manage.py runserver 0.0.0.0:8080 --settings=cmspyder.settings.dev`
