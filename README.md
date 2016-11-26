@@ -23,7 +23,7 @@ Distributed www crawler/scrapper with:
 4. ~~Third-party CI integration~~
 5. ~~Second iteration~~
 6. ~~Move GitHub site to Jekyll~~
-7. Container (docker) build
+7. ~~Container (docker) build~~
 8. Third iteration
     1. Subdomain discovery
     2. Subdirectory discovery
