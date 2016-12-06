@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # Application definition
 DJANGO_APPS = [
-    'bootstrap_admin',  # todo this should be before django.contrib.admin but isn't a django app
+    # 'bootstrap_admin',  # todo this should be before django.contrib.admin but isn't a django app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

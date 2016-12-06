@@ -16,4 +16,3 @@ lxml
 unittest-xml-reporting
 gunicorn
 django-nose
-bootstrap-admin

@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-admin.site.site_header = 'Administration'
+admin.site.site_header = 'CMSpyder Administration'
 admin.site.index_title = 'CMSpyder'
 admin.site.site_title = 'Administration'
 
