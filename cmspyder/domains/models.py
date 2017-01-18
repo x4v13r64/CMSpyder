@@ -50,7 +50,7 @@ class Subdomain(models.Model):
     domain = models.ForeignKey(Domain, related_name='subdomain')
     subdomain = models.CharField(max_length=250, blank=True)
     last_scan = models.DateTimeField(auto_now_add=True)
-    last_ip = models.GenericIPAddressField(null=True)
+    last_ip = models.GenericIPAddressField(null=True, blank=True)
 
     def __str__(self):
         if self.subdomain:
