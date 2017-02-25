@@ -38,5 +38,5 @@ class Command(BaseCommand):
             print("{0} jobs: skipping".format(jobs))
         """
 
-        for subdomain in Subdomain.objects.order_by('last_scan')[:100000]:
+        for subdomain in Subdomain.objects.order_by('last_scan')[:5000]:
             detect_cms.delay(subdomain.id)
