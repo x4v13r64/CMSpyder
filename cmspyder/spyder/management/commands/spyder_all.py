@@ -16,6 +16,7 @@ class Command(BaseCommand):
         print("Checking job count")
 
         # get the number of jobs currently running
+        """
         conn = amqp.Connection(host='{0}:{1}'.format(os.environ['RABBIT_MQ_HOST'],
                                                os.environ['RABBIT_MQ_PORT'],),
                                userid='{0}'.format(os.environ['RABBIT_MQ_USER']),
@@ -35,3 +36,7 @@ class Command(BaseCommand):
                 detect_cms.delay(subdomain.id)
         else:
             print("{0} jobs: skipping".format(jobs))
+        """
+
+        for subdomain in Subdomain.objects.order_by('last_scan')[:100000]:
+            detect_cms.delay(subdomain.id)
