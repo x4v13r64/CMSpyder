@@ -10,6 +10,7 @@ from spyder.detection_plugins import get_detection_plugins
 from spyder.models import ScanError
 from spyder.utils import create_logger
 
+import gc
 
 @shared_task
 def discover_domains(subdomain_id, request_result_text):
@@ -39,6 +40,9 @@ def discover_domains(subdomain_id, request_result_text):
                 logger.info('discover found {0}'.format(new_subdomain))
 
     logger.info('discover {0} DONE'.format(subdomain_id))
+
+    # release memory
+    gc.collect()
 
 
 @shared_task
@@ -130,3 +134,6 @@ def detect_cms(subdomain_id):
     subdomain.save()
 
     logger.info('detect {0} DONE'.format(subdomain))
+
+    # release memory
+    gc.collect()
