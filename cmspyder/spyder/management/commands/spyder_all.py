@@ -31,7 +31,7 @@ class Command(BaseCommand):
         if jobs < 1000:
             print("{0} jobs: Will add 100k jobs".format(jobs))
             # scan subdomains according to oldest last_scan entry
-            for subdomain in Subdomain.objects.order_by('last_scan')[:100000]:
+            for subdomain in Subdomain.objects.order_by('last_scan')[:10000]:
                 detect_cms.delay(subdomain.id)
         else:
             print("{0} jobs: skipping".format(jobs))
