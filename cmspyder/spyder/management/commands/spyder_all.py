@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
         # get the number of jobs currently running
         conn = amqp.Connection(host='{0}:{1}'.format(os.environ['RABBIT_MQ_HOST'],
-                                               os.environ['RABBIT_MQ_PORT'],),
+                                                     os.environ['RABBIT_MQ_PORT'],),
                                userid='{0}'.format(os.environ['RABBIT_MQ_USER']),
                                password='{0}'.format(os.environ['RABBIT_MQ_PASSWORD']),
                                virtual_host="/",
@@ -26,7 +26,6 @@ class Command(BaseCommand):
         chan = conn.channel()
         name, jobs, consumers = chan.queue_declare(queue=settings.CMSPYDER_DETECT_CMS_QUEUE,
                                                    passive=True)
-
         # if under 1k jobs, send 1k jobs
         if jobs < 1000:
             print("{0} jobs: Will add 1k jobs".format(jobs))
