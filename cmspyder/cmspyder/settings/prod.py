@@ -36,7 +36,6 @@ BROKER_URL = 'amqp://{0}:{1}@{2}:{3}//'.format(os.environ['RABBIT_MQ_USER'],
                                                os.environ['RABBIT_MQ_PASSWORD'],
                                                os.environ['RABBIT_MQ_HOST'],
                                                os.environ['RABBIT_MQ_PORT'],)
-# BROKER_URL = 'django://'
 
 CELERY_DEFAULT_QUEUE = 'celery_default_queue'
 CMSPYDER_DISCOVER_DOMAINS_QUEUE = 'cmspyder_discover_domains_queue'
@@ -61,8 +60,6 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
-
-# https://celery.readthedocs.io/en/latest/userguide/configuration.html
 
 # maximum number of tasks a pool worker process can execute before it's replaced with a new one,
 # to release workers who cause memory leaks
