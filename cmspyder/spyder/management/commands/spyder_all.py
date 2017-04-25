@@ -26,11 +26,11 @@ class Command(BaseCommand):
         chan = conn.channel()
         name, jobs, consumers = chan.queue_declare(queue=settings.CMSPYDER_DETECT_CMS_QUEUE,
                                                    passive=True)
-        # if under 1k jobs, send 1k jobs
-        if jobs < 1000:
-            print("{0} jobs: Will add 1k jobs".format(jobs))
+        # if under 5k jobs, send 10k jobs
+        if jobs < 5000:
+            print("{0} jobs: Will add 5k jobs".format(jobs))
             # scan subdomains according to oldest last_scan entry
-            for subdomain in Subdomain.objects.order_by('last_scan')[:1000]:
+            for subdomain in Subdomain.objects.order_by('last_scan')[:5000]:
                 detect_cms.delay(subdomain.id)
         else:
             print("{0} jobs: skipping".format(jobs))
